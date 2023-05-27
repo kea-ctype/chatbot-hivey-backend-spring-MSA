@@ -1,0 +1,45 @@
+
+# random port
+server:
+  port: 0
+
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://hivey.ciycwesqyh7a.ap-northeast-2.rds.amazonaws.com:3306/hivey
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: admin
+    password: 12345678
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  data:
+    rest:
+      base-path: /api
+      default-page-size: 10
+      max-page-size: 10
+
+  main:
+    allow-bean-definition-overriding: true
+
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+greeting:
+  message: Welcome to the HiVEY!
