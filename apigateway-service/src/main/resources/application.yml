@@ -20,17 +20,23 @@ spring:
             preLogger: true
             postLogger: true
       routes:
+#        - id: user-service
+#          uri: lb://USER-SERVICE
+#          predicates:
+#            - Path=/user-service/**
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/user-service/**
+            - Path=/user-service/auth
+            - Method=POST
           filters:
-#            - AddRequestHeader=user-request, user-request-header2
-#            - AddResponseHeader=user-response, user-response-header2
-            - name: CustomFilter
-            - name: LoggingFilter
-              args:
-                baseMessage: Spring Cloud Gateway Global Filter
-                preLogger: true
-                postLogger: true
-
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/auth/login
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}

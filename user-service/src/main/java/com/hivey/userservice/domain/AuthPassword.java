@@ -25,17 +25,16 @@ public class AuthPassword extends BaseTime {
     private Long securityId;
 
     @NotNull
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private Long userId;
 
     @NotNull
     @Column(name = "password")
     private String password;
 
     @Builder
-    public AuthPassword(User user, String password) {
-        this.user = user;
+    public AuthPassword(Long userId, String password) {
+        this.userId = userId;
         this.password = password;
     }
 }

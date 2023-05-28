@@ -21,7 +21,7 @@ public interface UserMapper {
     /**
      * DTO (UserLoginRequestDto) -> Entity
      */
-    User toUserFromUserLoginRequestDto(UserLoginRequestDto userLoginRequestDto);
+//    User toUserFromUserLoginRequestDto(UserLoginRequestDto userLoginRequestDto);
 
     /**
      * DTO (UserRegisterRequestDto) -> Entity
@@ -29,17 +29,17 @@ public interface UserMapper {
     User toUserFromUserRegisterEmailRequestDto(UserRegisterRequestDto userRegisterRequestDto);
 
     @Mapping(source = "userRegisterRequestDto.password", target = "password")
-    AuthPassword toAuthPassword(User user, UserRegisterRequestDto userRegisterRequestDto);
+    AuthPassword toAuthPassword(Long userId, UserRegisterRequestDto userRegisterRequestDto);
 
     /**
      * Entity (User) -> Data DTO (UserNameDto)
      */
-    UserNameDto toUserNameDto(User user);
+//    UserNameDto toUserNameDto(User user);
 
     /**
      * DTO (UserLogoutRequestDto) -> Entity
       */
-    User toUserFromUserLogoutRequestDto(UserLogoutRequestDto userLogoutRequestDto);
-
-    User toUserFromUserUpdateRequestDto(UserUpdateRequestDto userUpdateRequestDto);
+//    User toUserFromUserLogoutRequestDto(UserLogoutRequestDto userLogoutRequestDto);
+//
+//    User toUserFromUserUpdateRequestDto(UserUpdateRequestDto userUpdateRequestDto);
 }

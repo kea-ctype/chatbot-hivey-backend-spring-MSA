@@ -10,5 +10,5 @@ import java.util.Optional;
 @RepositoryRestResource(collectionResourceRel="authPassword",path="authPassword")
 public interface AuthPasswordRepository extends JpaRepository<AuthPassword, Long> {
 
-    Optional<AuthPassword> findByUser(User user);
+    Optional<AuthPassword> findByUserId(Long userid);
 }

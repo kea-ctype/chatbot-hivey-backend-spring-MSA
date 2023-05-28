@@ -1,8 +1,9 @@
 package com.hivey.userservice.global.util;
 
-import ctype.survey.hivey.global.error.CustomException;
 
-import static ctype.survey.hivey.global.config.BaseResponseStatus.*;
+import com.hivey.userservice.global.error.CustomException;
+
+import static com.hivey.userservice.global.config.BaseResponseStatus.*;
 
 /**
  * 편의를 위해 공통적으로 사용되는 메서드들을 모아 놓은 클래스

@@ -1,29 +1,35 @@
 package com.hivey.userservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hivey.userservice.domain.AuthPassword;
 import com.hivey.userservice.domain.User;
 import com.hivey.userservice.mapper.UserMapper;
 import lombok.*;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+
 public class UserRequestDto {
 
-    @Getter
+    @Data
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class UserLoginRequestDto {
+        @NotNull(message = "Email cannot be null")
+        @Size(min = 2, message = "Email not be less than two characters")
+        @Email
         private String email;
-        private String password;
 
-        public AuthPassword toUserEntity() {
-            return AuthPassword.builder()
-                    .user(UserMapper.INSTANCE.toUserFromUserLoginRequestDto(this))
-                    .password(password)
-                    .build();
-        }
+        @NotNull(message = "Password cannot be null")
+        @Size(min = 8, message = "Password must be equals or greater than 8 characters")
+        private String password;
     }
 
 
 
     @Data
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class UserRegisterRequestDto {
         private String name;
@@ -46,12 +52,12 @@ public class UserRequestDto {
                     .build();
         }
 
-        public AuthPassword toUserEntity() {
-            return AuthPassword.builder()
-                    .user(toEntity())
-                    .password(password)
-                    .build();
-        }
+//        public AuthPassword toUserEntity() {
+//            return AuthPassword.builder()
+//                    .user(toEntity())
+//                    .password(password)
+//                    .build();
+//        }
 
         // DTO 생성
         @Builder

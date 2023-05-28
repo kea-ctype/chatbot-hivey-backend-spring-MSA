@@ -1,8 +1,7 @@
 package com.hivey.userservice.domain;
 
+import com.hivey.userservice.global.common.BaseTime;
 import com.sun.istack.NotNull;
-import ctype.survey.hivey.domain.space.domain.SpaceMember;
-import ctype.survey.hivey.global.common.BaseTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 사용자
@@ -42,14 +40,6 @@ public class User extends BaseTime {
     @Column(name = "status")
     private char status = 'Y';
 
-    @OneToOne(mappedBy = "user")
-    private AuthSocial authSocial;
-
-    @OneToOne(mappedBy = "user")
-    private AuthPassword authPassword;
-
-    @OneToMany(mappedBy = "user")
-    private List<SpaceMember> members = new ArrayList<>();
 
     @Builder
     public User(String name, String email, String img, char status) {

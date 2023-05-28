@@ -34,6 +34,7 @@ dependencies {
 
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
+
     //s3
 //    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
@@ -56,8 +57,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     // Spring Security
-    implementation "org.springframework.boot:spring-boot-starter-security"
-    implementation "org.springframework.security:spring-security-test"
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation "org.springframework.security:spring-security-test"
 
     // Prometheus and Grafana
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
