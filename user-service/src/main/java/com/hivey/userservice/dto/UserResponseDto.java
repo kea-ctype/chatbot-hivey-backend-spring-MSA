@@ -12,13 +12,19 @@ public class UserResponseDto {
     public static class UserRes {
         private Long userIdx;
         private String name;
-        private String jwtToken;
 
-        public UserRes(Long userIdx, String name, String jwtToken) {
+        public UserRes(Long userIdx, String name) {
             this.userIdx = userIdx;
             this.name = name;
-            this.jwtToken = jwtToken;
         }
+    }
+
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class UserLoginRes {
+        private Long userId;
+        private String name;
+        private String email;
     }
 
     @Data

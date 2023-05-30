@@ -6,12 +6,15 @@ import com.hivey.userservice.domain.AuthPassword;
 import com.hivey.userservice.domain.User;
 import com.hivey.userservice.dto.UserRequestDto.UserLoginRequestDto;
 import com.hivey.userservice.dto.UserRequestDto.UserRegisterRequestDto;
+import com.hivey.userservice.dto.UserResponseDto;
+import com.hivey.userservice.dto.UserResponseDto.UserLoginRes;
 import com.hivey.userservice.dto.UserResponseDto.UserRes;
 import com.hivey.userservice.global.error.CustomException;
 import com.hivey.userservice.global.util.JwtService;
 import com.hivey.userservice.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,12 +39,19 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findOneByEmail(email).orElseThrow(() -> new CustomException(NOT_EXISTS_USER));
+        log.info("userId : {}", user.getUserId());
         AuthPassword authPassword = authPasswordRepository.findByUserId(user.getUserId()).orElseThrow(() -> new CustomException(NOT_EXISTS_USER));
-
+        log.info("authPassword : {}", authPassword.getPassword());
         return new org.springframework.security.core.userdetails.User(user.getEmail(), authPassword.getPassword(),
                 true, true, true, true, new ArrayList<>());
     }
 
+    /**
+     * 회원가입
+     * @param userRegisterRequestDto
+     * @return
+     */
+    @Override
     public UserRes register(UserRegisterRequestDto userRegisterRequestDto) {
 
         // 클라이언트로부터 받은 DTO에서 email을 가진 유저 찾기
@@ -66,16 +76,26 @@ public class UserServiceImpl implements UserService{
 
             AuthPassword registerPassword = authPasswordRepository.save(UserMapper.INSTANCE.toAuthPassword(userId, userRegisterRequestDto));
 
-            //jwt 발급.
-            String jwt = jwtService.createJwt(userId); // jwt 발급
             String name = registerUser.getName();
-            UserRes userRes = new UserRes(userId, name, jwt);
+            UserRes userRes = new UserRes(userId, name);
             return userRes;
 
 
         } catch (Exception exception) {
             throw new CustomException(DATABASE_ERROR);
         }
+
+    }
+
+    /**
+     * success login
+     */
+    @Override
+    public UserLoginRes getUserDetailsByEmail(String email) {
+        User user = userRepository.findOneByEmail(email).orElseThrow(() -> new CustomException(NOT_EXISTS_USER));
+        UserLoginRes userLoginRes = new ModelMapper().map(user, UserLoginRes.class);
+
+        return userLoginRes;
 
     }
 

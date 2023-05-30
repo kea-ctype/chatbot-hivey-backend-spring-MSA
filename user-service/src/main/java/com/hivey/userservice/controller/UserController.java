@@ -1,5 +1,6 @@
 package com.hivey.userservice.controller;
 
+import com.hivey.userservice.service.UserService;
 import com.hivey.userservice.service.UserServiceImpl;
 import com.hivey.userservice.dto.UserRequestDto.UserRegisterRequestDto;
 import com.hivey.userservice.dto.UserResponseDto.UserRes;
@@ -7,6 +8,8 @@ import com.hivey.userservice.global.config.BaseResponse;
 import com.hivey.userservice.global.util.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -18,10 +21,19 @@ public class UserController {
 
     private final UserServiceImpl userService;
     private final JwtService jwtService;
+    private final Environment env;
+
 
     @GetMapping("/health_check")
     public String status() {
-        return "It's Working in User Service";
+
+        return String.format("It's Working in User Service"
+                + ", port(local.server.port)=" + env.getProperty("local.server.port")
+                + ", port(server.port)=" + env.getProperty("server.port")
+                + ", token secret=" + env.getProperty("token.secret")
+                + ", token expiration time=" + env.getProperty("token.expiration_time")
+
+        );
     }
 
     /**
@@ -34,32 +46,7 @@ public class UserController {
         return new BaseResponse<>(registerUser);
     }
 
-    /**
-     * 로그인
-     */
-//    @PostMapping("/login")
-//    public BaseResponse<UserRes> login(@RequestBody UserLoginRequestDto user){
-//
-//        UserRes loginUser = userService.login(user);
-//        log.debug("loginUser: {}", loginUser);
-//
-//        if(loginUser.getUserIdx() < 0) {
-//            return new BaseResponse<>(NOT_EXISTS_USER);
-//        }
-//
-//        return new BaseResponse<>(loginUser);
-//    }
 
-    /**
-     *
-     * 2.7 로그아웃
-     */
-//    @PostMapping("/logout/{userId}")
-//    public BaseResponse<UserResponseDto.UserLogoutResponseDto> logout(@PathVariable Long userId,@RequestBody UserLogoutRequestDto userLogoutRequestDto) throws BaseException {
-//        validateUserId(userId);
-//        validateUserJwt(jwtService, userId);
-//        return new BaseResponse<>(userService.logout(userId,userLogoutRequestDto));
-//    }
 
     /**
      * 1.2 사용자 정보 수정하기
