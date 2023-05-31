@@ -30,7 +30,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 //        http.authorizeHttpRequests().antMatchers("/user-service/**").permitAll();
-        http.authorizeRequests().antMatchers("/actuator/**").permitAll();
+//        http.authorizeRequests().antMatchers("/actuator/**").permitAll();
         http.authorizeRequests()
                 .antMatchers("/error/**").permitAll()
                 .antMatchers("/**")
@@ -43,7 +43,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private AuthenticationFilter getAuthenticationFilter() throws Exception {
         AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager(), userService, env);
         //인증 처리
-//        authenticationFilter.setAuthenticationManager(authenticationManager());
+        authenticationFilter.setAuthenticationManager(authenticationManager());
 
         return authenticationFilter;
     }

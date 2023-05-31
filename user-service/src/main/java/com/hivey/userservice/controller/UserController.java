@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserServiceImpl userService;
-    private final JwtService jwtService;
     private final Environment env;
 
 

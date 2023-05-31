@@ -8,4 +8,4 @@ spring:
     config:
       server:
         git:
-          uri: file:///Users/cheanna/IdeaProjects/hivey/git-local-repo
+          uri: file:///Users/cheanna/IdeaProjects/ctype/chatbot-hivey-backend-spring-MSA/git-local-repo
