@@ -1,14 +1,14 @@
-package com.hivey.userservice.controller;
+package com.hivey.userservice.api;
 
-import com.hivey.userservice.service.UserService;
-import com.hivey.userservice.service.UserServiceImpl;
+import com.hivey.userservice.application.UserServiceImpl;
+import com.hivey.userservice.dto.UserRequestDto;
 import com.hivey.userservice.dto.UserRequestDto.UserRegisterRequestDto;
+import com.hivey.userservice.dto.UserResponseDto;
+import com.hivey.userservice.dto.UserResponseDto.GetUserRes;
 import com.hivey.userservice.dto.UserResponseDto.UserRes;
 import com.hivey.userservice.global.config.BaseResponse;
-import com.hivey.userservice.global.util.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,18 +48,11 @@ public class UserController {
 
 
     /**
-     * 1.2 사용자 정보 수정하기
+     * 1.2 사용자 정보 조회
      */
-//    @PatchMapping("/{userId}")
-//    public BaseResponse<String> userUpdate(@PathVariable Long userId, @RequestBody UserUpdateRequestDto userUpdateRequestDto) throws BaseException {
-//
-//        validateUserId(userId);
-//        validateUserJwt(jwtService, userId);
-//
-//        if(userService.updateUser(userId, userUpdateRequestDto) == 1){
-//            return new BaseResponse<>("사용자 정보 수정에 성공하였습니다.");
-//        }else{
-//            return new BaseResponse<>(FAILED_TO_UPDATE_USER);
-//        }
-//    }
+    @PatchMapping("/users/{userId}")
+    public BaseResponse<GetUserRes> getUser(@PathVariable Long userId) {
+        GetUserRes getUserRes = userService.getUserByUserId(userId);
+        return new BaseResponse<>(getUserRes);
+    }
 }

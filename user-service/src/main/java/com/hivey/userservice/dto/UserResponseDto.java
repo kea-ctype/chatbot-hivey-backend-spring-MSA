@@ -10,11 +10,11 @@ public class UserResponseDto {
     @Data
     @Builder
     public static class UserRes {
-        private Long userIdx;
+        private Long userId;
         private String name;
 
-        public UserRes(Long userIdx, String name) {
-            this.userIdx = userIdx;
+        public UserRes(Long userId, String name) {
+            this.userId = userId;
             this.name = name;
         }
     }
@@ -29,10 +29,11 @@ public class UserResponseDto {
 
     @Data
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class UserLogoutResponseDto{
-        private String connection;
+    public static class GetUserRes {
+        private Long userId;
+        private String img;
+        private String name;
 
-        @Builder
-        public UserLogoutResponseDto(String connection){this.connection=connection;}
     }
+
 }

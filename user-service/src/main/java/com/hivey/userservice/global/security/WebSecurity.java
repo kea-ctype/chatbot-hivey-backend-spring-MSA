@@ -1,7 +1,7 @@
 package com.hivey.userservice.global.security;
 
-import com.hivey.userservice.service.UserService;
-import com.hivey.userservice.service.UserServiceImpl;
+import com.hivey.userservice.application.UserService;
+import com.hivey.userservice.application.UserServiceImpl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,8 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import static org.springframework.security.web.server.authorization.IpAddressReactiveAuthorizationManager.hasIpAddress;
 
 @Configuration
 @EnableWebSecurity

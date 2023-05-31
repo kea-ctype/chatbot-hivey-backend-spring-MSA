@@ -2,9 +2,8 @@ package com.hivey.userservice.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hivey.userservice.dto.UserRequestDto.UserLoginRequestDto;
-import com.hivey.userservice.dto.UserResponseDto;
 import com.hivey.userservice.dto.UserResponseDto.UserLoginRes;
-import com.hivey.userservice.service.UserService;
+import com.hivey.userservice.application.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
