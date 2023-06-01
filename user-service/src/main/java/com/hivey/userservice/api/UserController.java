@@ -1,5 +1,6 @@
 package com.hivey.userservice.api;
 
+import com.hivey.userservice.application.UserService;
 import com.hivey.userservice.application.UserServiceImpl;
 import com.hivey.userservice.dto.UserRequestDto;
 import com.hivey.userservice.dto.UserRequestDto.UserRegisterRequestDto;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final Environment env;
 
 

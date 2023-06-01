@@ -2,7 +2,6 @@ package com.hivey.userservice.application;
 
 
 import com.hivey.userservice.dto.UserRequestDto.UserRegisterRequestDto;
-import com.hivey.userservice.dto.UserResponseDto;
 import com.hivey.userservice.dto.UserResponseDto.GetUserRes;
 import com.hivey.userservice.dto.UserResponseDto.UserLoginRes;
 import com.hivey.userservice.dto.UserResponseDto.UserRes;

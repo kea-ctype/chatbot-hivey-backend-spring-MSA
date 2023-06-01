@@ -72,6 +72,5 @@ management:
       exposure:
         include: refresh, health, beans, httptrace
 
-
 #token:
 #  secret: user_token

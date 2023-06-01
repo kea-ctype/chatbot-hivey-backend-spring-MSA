@@ -1,6 +1,5 @@
 package com.hivey.sformservice.domain.space;
 
-
 import com.hivey.sformservice.domain.form.Form;
 import com.hivey.sformservice.global.common.BaseTime;
 import com.sun.istack.NotNull;

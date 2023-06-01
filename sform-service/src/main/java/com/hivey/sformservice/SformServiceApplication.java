@@ -2,8 +2,10 @@ package com.hivey.sformservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * 여기서 @EnableJpaAuditing은 BaseTime 클래스처럼 JPA auditing 기능을 활성화하기 위한 어노테이션이다.

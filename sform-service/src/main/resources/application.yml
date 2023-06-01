@@ -25,7 +25,7 @@ spring:
       path: /h2-console
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:~/sfrom
+    url: jdbc:h2:~/sform
     username: hivey
     password:
     generate-unique-name: false
@@ -33,7 +33,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     generate-ddl: true
     database: h2
     database-platform: org.hibernate.dialect.H2Dialect
