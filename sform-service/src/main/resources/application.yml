@@ -1,6 +1,6 @@
 # random port
 server:
-  port: 0
+  port: 9000
 
 # RDS
 #spring:
@@ -25,11 +25,11 @@ spring:
       path: /h2-console
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:~/sform
+    url: jdbc:h2:~/sfrom
     username: hivey
     password:
     generate-unique-name: false
-    name: space
+    name: sform
 
   jpa:
     hibernate:

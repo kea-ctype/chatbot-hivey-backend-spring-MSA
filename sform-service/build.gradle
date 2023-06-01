@@ -67,7 +67,7 @@ dependencies {
 
     // Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
-//    implementation "org.springframework.security:spring-security-test"
+    implementation "org.springframework.security:spring-security-test"
 
     // Prometheus and Grafana
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
