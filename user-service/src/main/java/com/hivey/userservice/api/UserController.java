@@ -48,9 +48,9 @@ public class UserController {
 
 
     /**
-     * 1.2 사용자 정보 조회
+     *  사용자 정보 조회
      */
-    @PatchMapping("/users/{userId}")
+    @GetMapping("/users/{userId}")
     public BaseResponse<GetUserRes> getUser(@PathVariable Long userId) {
         GetUserRes getUserRes = userService.getUserByUserId(userId);
         return new BaseResponse<>(getUserRes);

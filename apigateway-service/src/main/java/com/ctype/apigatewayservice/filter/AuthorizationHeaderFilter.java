@@ -1,6 +1,5 @@
 package com.ctype.apigatewayservice.filter;
 
-
 import com.google.common.net.HttpHeaders;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
