@@ -2,6 +2,7 @@ package com.hivey.sformservice.dto.space;
 
 import com.hivey.sformservice.domain.space.Space;
 import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ public class SpaceRequestDto {
     /**
      * 3.1 스페이스 생성하기
      */
-    @Getter
+    @Data
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class SpaceCreateRequestDto {
         @NotNull(message = "스페이스 이름을 입력해 주세요.")

@@ -1,35 +1,38 @@
 package com.hivey.sformservice.application.space;
 
-import com.hivey.sformservice.dao.form.FormRepository;
 import com.hivey.sformservice.dao.space.SpaceGroupRepository;
 import com.hivey.sformservice.dao.space.SpaceMemberRepository;
 import com.hivey.sformservice.dao.space.SpaceRepository;
 import com.hivey.sformservice.domain.space.Space;
 import com.hivey.sformservice.domain.space.SpaceGroup;
 import com.hivey.sformservice.domain.space.SpaceMember;
-import com.hivey.sformservice.dto.space.SpaceRequestDto;
 import com.hivey.sformservice.dto.space.SpaceRequestDto.SpaceCreateRequestDto;
-import com.hivey.sformservice.dto.space.SpaceResponseDto;
 import com.hivey.sformservice.dto.space.SpaceResponseDto.SpaceCreateResponseDto;
 import com.hivey.sformservice.global.common.RandomString;
 import com.hivey.sformservice.global.config.BaseResponseStatus;
 import com.hivey.sformservice.global.error.CustomException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class SpaceServiceImpl implements SpaceService{
 
-    private final SpaceRepository spaceRepository;
+    SpaceRepository spaceRepository;
 //    private final FormRepository formRepository;
-    private final SpaceMemberRepository spaceMemberRepository;
-    private final SpaceGroupRepository spaceGroupRepository;
+    SpaceMemberRepository spaceMemberRepository;
+    SpaceGroupRepository spaceGroupRepository;
+
+    @Autowired
+    public SpaceServiceImpl(SpaceRepository spaceRepository, SpaceMemberRepository spaceMemberRepository, SpaceGroupRepository spaceGroupRepository) {
+        this.spaceRepository = spaceRepository;
+        this.spaceMemberRepository = spaceMemberRepository;
+        this.spaceGroupRepository = spaceGroupRepository;
+    }
 
     /**
      * 3.1 스페이스 생성하기
