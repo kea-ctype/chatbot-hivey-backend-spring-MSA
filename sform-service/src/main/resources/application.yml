@@ -1,0 +1,61 @@
+# random port
+server:
+  port: 0
+
+# RDS
+#spring:
+#  application:
+#    name: user-service
+#  datasource:
+#    url: jdbc:mysql://hivey.ciycwesqyh7a.ap-northeast-2.rds.amazonaws.com:3306/hivey
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: admin
+#    password: 12345678
+
+# h2
+spring:
+  application:
+    name: sform-service
+
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/sform
+    username: hivey
+    password:
+    generate-unique-name: false
+    name: space
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    generate-ddl: true
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  data:
+    rest:
+      base-path: /api
+      default-page-size: 10
+      max-page-size: 10
+
+  main:
+    allow-bean-definition-overriding: true
+
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
