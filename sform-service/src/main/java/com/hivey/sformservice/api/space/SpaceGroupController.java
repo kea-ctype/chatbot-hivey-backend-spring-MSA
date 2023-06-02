@@ -1,13 +1,10 @@
 package com.hivey.sformservice.api.space;
 
 import com.hivey.sformservice.application.space.SpaceGroupService;
-import com.hivey.sformservice.dto.group.SpaceGroupResponseDto;
 import com.hivey.sformservice.dto.group.SpaceGroupResponseDto.SpaceGroupGetListRes;
 import com.hivey.sformservice.dto.group.SpaceGroupResponseDto.SpaceGroupListRes;
+import com.hivey.sformservice.dto.member.SpaceMemberResponseDto.SpaceMemberByGroupRes;
 import com.hivey.sformservice.global.config.BaseResponse;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +37,15 @@ class SpaceGroupController {
     public BaseResponse<List<SpaceGroupListRes>> getSpaceGroupsAndMembers(@PathVariable Long spaceId) {
 
         return new BaseResponse<>(spaceGroupService.findGroupsAndMembersBySpace(spaceId));
+    }
+
+    /**
+     * 3.3 특정 스페이스 그룹 멤버 목록만 불러오기
+     */
+    @GetMapping("/{spaceId}/groups/{groupId}")
+    public BaseResponse<List<SpaceMemberByGroupRes>> getSpaceMembersByGroup(@PathVariable Long spaceId, @PathVariable Long groupId) {
+
+        return new BaseResponse<>(spaceGroupService.findSpaceMemebersByGroups(groupId));
     }
 
 
