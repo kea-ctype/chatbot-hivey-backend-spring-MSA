@@ -13,6 +13,7 @@ import com.hivey.sformservice.domain.space.SpaceGroup;
 import com.hivey.sformservice.domain.space.SpaceMember;
 import com.hivey.sformservice.dto.form.FormRequestDto;
 import com.hivey.sformservice.dto.form.FormRequestDto.RegisterFormReq;
+import com.hivey.sformservice.dto.form.FormRequestDto.RegisterQuestionReq;
 import com.hivey.sformservice.dto.form.FormResponseDto;
 import com.hivey.sformservice.dto.form.FormResponseDto.*;
 import com.hivey.sformservice.global.error.CustomException;
@@ -115,7 +116,7 @@ public class FormServiceImpl implements FormService {
                 }
             }
 
-            } else { //필수 참여일 경우
+        } else { //필수 참여일 경우
             //모든 spaceMember submission에 추가
             List<SpaceMember> spaceMembers = spaceMemberRepository.findAllBySpace(space);
             for (SpaceMember spaceMember : spaceMembers) {
@@ -130,79 +131,56 @@ public class FormServiceImpl implements FormService {
         //질문 저장
         List<RegisterQuestionRes> questionList = new ArrayList<>();
         ModelMapper modelMapper = new ModelMapper();
-        for (int k = 0; k < registerFormReq.getQuestionRequests().size(); k++) {
+        for (RegisterQuestionReq questionReq : registerFormReq.getQuestionRequests()) {
+            // 객관식 질문 등록
+            Question question = questionRepository.save(Question.builder()
+                    .form(form)
+                    .type(questionReq.getType())
+                    .title(questionReq.getTitle())
+                    .content(questionReq.getContent())
+                    .status('Y')
+                    .build());
 
+            //질문 등록 Response 추가
+            RegisterQuestionRes registerQuestionRes = modelMapper.map(question, RegisterQuestionRes.class);
+            registerQuestionRes.setOptions(null);
 
-            //객관식 질문일 경우
-            if (registerFormReq.getQuestionRequests().get(k).getType() == 'M') {
-                // 객관식 질문 등록
-                Question question = questionRepository.save(Question.builder()
-                        .form(form)
-                        .type('M')
-                        .title(registerFormReq.getQuestionRequests().get(k).getTitle())
-                        .content(registerFormReq.getQuestionRequests().get(k).getContent())
-                        .status('Y')
-                        .build());
-
-                // 객관식 질문 존재 여부 확인
-                Question checkQuestion = questionRepository.findAllByQuestionId(question.getQuestionId()).orElseThrow(() -> new CustomException(NOT_EXISTS_QUESTION));
-
-                // 리스트로 받은 옵션 변수에 저장
-                List<String> option = registerFormReq.getQuestionRequests().get(k).getOptions();
+            //질문이 객관식일 경우
+            if (questionReq.getType() == 'M') {
                 List<RegisterOptionRes> optionRes = new ArrayList<>();
-                // 옵션 저장
-                for (String s : option) {
-                    MultipleChoiceOption registerOption = multipleChoiceOptionRepository.save(MultipleChoiceOption.builder()
-                            .question(checkQuestion)
-                            .optionContent(s)
+
+                for (String option : questionReq.getOptions()) {
+                    //질문에 대한 옵션 저장
+                    MultipleChoiceOption registerOption = MultipleChoiceOption.builder()
+                            .question(question)
+                            .optionContent(option)
                             .status('Y')
-                            .build());
-                    optionRes.add(RegisterOptionRes.builder()
-                            .optionId(registerOption.getOptionId())
-                            .option(registerOption.getOptionContent())
-                            .build());
+                            .build();
+
+                    registerOption = multipleChoiceOptionRepository.save(registerOption);
+
+                    //옵션 Response 추가
+                    RegisterOptionRes optionResItem = modelMapper.map(registerOption, RegisterOptionRes.class);
+                    optionRes.add(optionResItem);
                 }
-                questionList.add(RegisterQuestionRes.builder()
-                        .questionId(checkQuestion.getQuestionId())
-                        .type(checkQuestion.getType())
-                        .title(checkQuestion.getTitle())
-                        .content(checkQuestion.getContent())
-                        .options(optionRes)
-                        .build());
-            }
-            // 서술형 질문 저장
-            else {
-                //question 등록
-                Question registerQuestion = questionRepository.save(Question.builder()
-                        .form(form)
-                        .type(registerFormReq.getQuestionRequests().get(k).getType())
-                        .title(registerFormReq.getQuestionRequests().get(k).getTitle())
-                        .content(registerFormReq.getQuestionRequests().get(k).getContent())
-                        .status('Y')
-                        .build()
-                );
-                questionList.add(RegisterQuestionRes.builder()
-                        .questionId(registerQuestion.getQuestionId())
-                        .type(registerQuestion.getType())
-                        .title(registerQuestion.getTitle())
-                        .content(registerQuestion.getContent())
-                        .options(null)
-                        .build());
+
+                //Response : 질문에 대한 옵션 리스트 추가
+                registerQuestionRes.setOptions(optionRes);
             }
 
+            //Response : 설문지에 대한 질문 리스트 추가
+            questionList.add(registerQuestionRes);
         }
 
-        return RegisterFormRes.builder()
-                .formId(formId)
-                .title(updatedForm.getTitle())
-                .content(updatedForm.getContent())
-                .startDate(updatedForm.getStartDate())
-                .endDate(updatedForm.getEndDate())
-                .isAnonymous(updatedForm.getIsAnonymous())
-                .isMandatory(updatedForm.getIsMandatory())
-                .groups(groups)
-                .questions(questionList)
-                .build();
+        //
+        RegisterFormRes registerFormRes = modelMapper.map(updatedForm, RegisterFormRes.class);
+
+        registerFormRes.setFormId(formId);
+        registerFormRes.setGroups(groups);
+        registerFormRes.setQuestions(questionList);
+
+        return registerFormRes;
     }
+
 }
 

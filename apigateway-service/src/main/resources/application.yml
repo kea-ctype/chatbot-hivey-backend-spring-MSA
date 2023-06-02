@@ -70,7 +70,7 @@ spring:
           uri: lb://SFORM-SERVICE
           predicates:
             - Path=/sform-service/forms/**
-            - Method=GET,POST
+            - Method=GET,POST,PATCH
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/sform-service/(?<segment>.*), /$\{segment}
