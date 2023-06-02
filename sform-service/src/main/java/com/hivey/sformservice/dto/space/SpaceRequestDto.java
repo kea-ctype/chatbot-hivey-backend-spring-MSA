@@ -3,7 +3,6 @@ package com.hivey.sformservice.dto.space;
 import com.hivey.sformservice.domain.space.Space;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
@@ -14,7 +13,7 @@ public class SpaceRequestDto {
      */
     @Data
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class SpaceCreateRequestDto {
+    public static class SpaceCreateReq {
         @NotNull(message = "스페이스 이름을 입력해 주세요.")
         private String name;
         private String img;

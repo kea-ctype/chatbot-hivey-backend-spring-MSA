@@ -9,13 +9,14 @@ import lombok.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class UserRequestDto {
 
     @Data
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class UserLoginRequestDto {
+    public static class UserLoginRequestDto implements Serializable {
         @NotNull(message = "Email cannot be null")
         @Size(min = 2, message = "Email not be less than two characters")
         @Email

@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 public class UserResponseDto {
 
     @Data
     @Builder
-    public static class UserRes {
+    public static class UserRes implements Serializable {
         private Long userId;
         private String name;
 
@@ -21,7 +23,7 @@ public class UserResponseDto {
 
     @Data
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class UserLoginRes {
+    public static class UserLoginRes implements Serializable {
         private Long userId;
         private String name;
         private String email;
@@ -29,7 +31,7 @@ public class UserResponseDto {
 
     @Data
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class GetUserRes {
+    public static class GetUserRes implements Serializable {
         private Long userId;
         private String img;
         private String name;

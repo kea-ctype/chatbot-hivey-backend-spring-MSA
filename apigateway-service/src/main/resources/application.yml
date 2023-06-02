@@ -60,11 +60,12 @@ spring:
         - id: sform-service
           uri: lb://SFORM-SERVICE
           predicates:
-            - Path=/sform-service/**
+            - Path=/sform-service/spaces/**
             - Method=GET,POST
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/sform-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
 
 management:
   endpoints:

@@ -1,38 +1,50 @@
 package com.hivey.sformservice.application.space;
 
+import com.hivey.sformservice.dao.form.FormRepository;
 import com.hivey.sformservice.dao.space.SpaceGroupRepository;
 import com.hivey.sformservice.dao.space.SpaceMemberRepository;
 import com.hivey.sformservice.dao.space.SpaceRepository;
+import com.hivey.sformservice.domain.form.Form;
 import com.hivey.sformservice.domain.space.Space;
 import com.hivey.sformservice.domain.space.SpaceGroup;
 import com.hivey.sformservice.domain.space.SpaceMember;
-import com.hivey.sformservice.dto.space.SpaceRequestDto.SpaceCreateRequestDto;
-import com.hivey.sformservice.dto.space.SpaceResponseDto.SpaceCreateResponseDto;
+import com.hivey.sformservice.dto.form.FormResponseDto;
+import com.hivey.sformservice.dto.form.FormResponseDto.FormListResponseDto;
+import com.hivey.sformservice.dto.group.SpaceGroupResponseDto;
+import com.hivey.sformservice.dto.group.SpaceGroupResponseDto.SpaceGroupListRes;
+import com.hivey.sformservice.dto.space.SpaceDataDto;
+import com.hivey.sformservice.dto.space.SpaceDataDto.GetUserRes;
+import com.hivey.sformservice.dto.space.SpaceRequestDto.SpaceCreateReq;
+import com.hivey.sformservice.dto.space.SpaceResponseDto.SpaceCreateRes;
+import com.hivey.sformservice.dto.space.SpaceResponseDto.SpaceInfoRes;
 import com.hivey.sformservice.global.common.RandomString;
-import com.hivey.sformservice.global.config.BaseResponseStatus;
 import com.hivey.sformservice.global.error.CustomException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.hivey.sformservice.global.config.BaseResponseStatus.*;
 
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class SpaceServiceImpl implements SpaceService{
 
-    SpaceRepository spaceRepository;
-//    private final FormRepository formRepository;
-    SpaceMemberRepository spaceMemberRepository;
-    SpaceGroupRepository spaceGroupRepository;
+    private final SpaceRepository spaceRepository;
+    private final FormRepository formRepository;
+    private final SpaceMemberRepository spaceMemberRepository;
+    private final SpaceGroupRepository spaceGroupRepository;
 
-    @Autowired
-    public SpaceServiceImpl(SpaceRepository spaceRepository, SpaceMemberRepository spaceMemberRepository, SpaceGroupRepository spaceGroupRepository) {
-        this.spaceRepository = spaceRepository;
-        this.spaceMemberRepository = spaceMemberRepository;
-        this.spaceGroupRepository = spaceGroupRepository;
-    }
+    private final Environment env;
+    private final RestTemplate restTemplate;
 
     /**
      * 3.1 스페이스 생성하기
@@ -40,7 +52,7 @@ public class SpaceServiceImpl implements SpaceService{
      */
     @Transactional
     @Override
-    public SpaceCreateResponseDto createSpace(Long userId, SpaceCreateRequestDto spaceCreateRequestDto) {
+    public SpaceCreateRes createSpace(Long userId, SpaceCreateReq spaceCreateReq) {
         log.info("start");
         log.info("userId : {}", userId);
 
@@ -61,12 +73,10 @@ public class SpaceServiceImpl implements SpaceService{
 
         }
 
-        Space originalSpace = spaceRepository.findById(1L).orElseThrow(() -> new CustomException(BaseResponseStatus.NOT_EXIST_SPACE));
-        log.debug("spaceId = 1 : {}", originalSpace.getSpaceId());
 
 
         // 생성한 링크와 함께 새로운 스페이스를 만든다.
-        Space newSpace = spaceRepository.save(spaceCreateRequestDto.toEntity(accessCode));
+        Space newSpace = spaceRepository.save(spaceCreateReq.toEntity(accessCode));
         log.debug("newSpace : {}", newSpace);
         log.debug("spaceId : {}", newSpace.getSpaceId());
         log.debug("accessCode : {}", newSpace.getAccessCode());
@@ -87,9 +97,66 @@ public class SpaceServiceImpl implements SpaceService{
                 .status('Y')
                 .build());
 
-        SpaceCreateResponseDto spaceCreateResponseDto = new ModelMapper().map(newSpace, SpaceCreateResponseDto.class);
+        SpaceCreateRes spaceCreateResponseDto = new ModelMapper().map(newSpace, SpaceCreateRes.class);
 
         log.debug("spaceId2 : {}", spaceCreateResponseDto.getSpaceId());
         return spaceCreateResponseDto;
+    }
+
+    /**
+     * 3.6 스페이스 조회하기
+     * 클라이언트에서 요청한 스페이스의 정보를 반환하기 이전에 해당 사용자가 관리자인지 참여자인지를 알려준다.
+     */
+    @Override
+    @Transactional
+    public SpaceInfoRes getSpace(Long spaceId, Long userId) {
+
+        log.debug("start");
+        // 스페이스 식별 번호에 해당하는 스페이스 엔티티를 가져온다.
+        Space space = spaceRepository.findById(spaceId)
+                .orElseThrow(() -> new CustomException(NOT_EXIST_SPACE));
+        log.debug("spaceId : {}", space.getSpaceId());
+
+        // 스페이스의 설문 목록을 조회한다.
+        List<Form> forms = formRepository.findAllBySpace(space);
+
+        List<FormListResponseDto> formListResponseDtos = forms.stream()
+                .map(form -> new ModelMapper().map(form, FormListResponseDto.class))
+                .collect(Collectors.toList());
+
+        // 스페이스 멤버 정보를 조회한다.
+        SpaceMember spaceMember = spaceMemberRepository.findOneByUserIdAndSpace(userId, space)
+                .orElseThrow(() -> new CustomException(NOT_EXISTS_SPACE_MEMBER));
+
+        if (spaceMember.getPosition() == 'M') {
+            // 해당 사용자가 스페이스의 관리자인 경우
+            // 스페이스 참여 인원수, 스페이스 그룹 정보, 스페이스 그룹당 참여자 정보를 넣어준다.
+
+            int memberCount = spaceMemberRepository.findAllBySpace(space).size();
+
+            List<SpaceGroup> spaceGroups = spaceGroupRepository.findAllBySpace(space);
+
+            List<SpaceGroupListRes> spaceGroupListResponseDtos = spaceGroups.stream()
+                    .map(spaceGroup -> new ModelMapper().map(spaceGroup, SpaceGroupListRes.class))
+                    .collect(Collectors.toList());
+
+            return SpaceInfoRes.builder()
+                    .name(space.getName())
+                    .img(space.getImg())
+                    .forms(formListResponseDtos)
+                    .memberCount(memberCount)
+                    .groups(spaceGroupListResponseDtos)
+                    .build();
+
+        } else if (spaceMember.getPosition() == 'P') {
+            // 해당 사용자가 스페이스의 참여자인 경우
+            return SpaceInfoRes.builder()
+                    .name(space.getName())
+                    .img(space.getImg())
+                    .forms(formListResponseDtos)
+                    .build();
+        }
+
+        throw new CustomException(FAILED_TO_GET_SPACE_INFO);
     }
 }

@@ -7,7 +7,7 @@ server:
 #  application:
 #    name: user-service
 #  datasource:
-#    url: jdbc:mysql://hivey.ciycwesqyh7a.ap-northeast-2.rds.amazonaws.com:3306/hivey
+#    url:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #    username: admin
 #    password: 12345678
