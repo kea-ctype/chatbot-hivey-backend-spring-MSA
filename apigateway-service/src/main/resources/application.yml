@@ -66,6 +66,15 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/sform-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
+        - id: sform-service
+          uri: lb://SFORM-SERVICE
+          predicates:
+            - Path=/sform-service/forms/**
+            - Method=GET,POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/sform-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
 
 management:
   endpoints:

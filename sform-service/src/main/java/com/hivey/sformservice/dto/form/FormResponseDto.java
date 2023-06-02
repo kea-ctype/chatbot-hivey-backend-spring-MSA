@@ -1,13 +1,20 @@
 package com.hivey.sformservice.dto.form;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 public class FormResponseDto {
+
+    /**
+     * 3.1 설문지 생성
+     */
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class RegisterRes {
+        private Long formId;
+    }
 
     /**
      * 스페이스에 해당하는 설문 목록을 불러올 때 사용하는 DTO
@@ -50,4 +57,6 @@ public class FormResponseDto {
             this.isMandatory = isMandatory;
         }
     }
+
+
 }

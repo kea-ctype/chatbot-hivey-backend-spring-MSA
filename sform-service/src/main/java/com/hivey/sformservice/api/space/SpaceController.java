@@ -5,7 +5,6 @@ import com.hivey.sformservice.application.space.SpaceService;
 import com.hivey.sformservice.dto.member.SpaceMemberRequestDto.SpaceMemberJoinReq;
 import com.hivey.sformservice.dto.member.SpaceMemberResponseDto.SpaceMemberJoinRes;
 import com.hivey.sformservice.dto.space.SpaceRequestDto.SpaceCreateReq;
-import com.hivey.sformservice.dto.space.SpaceResponseDto;
 import com.hivey.sformservice.dto.space.SpaceResponseDto.SpaceCreateRes;
 import com.hivey.sformservice.dto.space.SpaceResponseDto.SpaceInfoRes;
 import com.hivey.sformservice.global.config.BaseResponse;

@@ -1,17 +1,28 @@
 package com.hivey.sformservice.api.form;
 
+import com.hivey.sformservice.application.form.FormService;
+import com.hivey.sformservice.dto.form.FormResponseDto.RegisterRes;
+import com.hivey.sformservice.global.config.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/forms")
+@RequestMapping("/forms")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FormController {
 
-    private FormService formService;
+    private final FormService formService;
+
+    /**
+     * 4.1 설문지 생성하기 (+ 버튼) !!
+     */
+    @PostMapping("/{spaceId}/{userId}")
+    public BaseResponse<RegisterRes> createForm(@PathVariable Long spaceId, @PathVariable Long userId){
+        return new BaseResponse<>(formService.createForm(spaceId, userId));
+    }
+
+
 }
