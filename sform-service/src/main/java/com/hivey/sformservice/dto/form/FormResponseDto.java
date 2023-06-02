@@ -3,6 +3,7 @@ package com.hivey.sformservice.dto.form;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 public class FormResponseDto {
 
@@ -14,6 +15,85 @@ public class FormResponseDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class RegisterRes {
         private Long formId;
+    }
+
+    /**
+     * 설문지 생성 : All
+     */
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class RegisterFormRes {
+        private Long formId;
+        private String title;
+        private String content;
+        private Date startDate;
+        private Date endDate;
+        private char isAnonymous;
+        private char isMandatory;
+        private List<RegisterGroupRes> groups;
+        private List<RegisterQuestionRes> questions;
+
+        @Builder
+        public RegisterFormRes(Long formId, String title, String content, Date startDate, Date endDate, char isAnonymous, char isMandatory, List<RegisterGroupRes> groups, List<RegisterQuestionRes> questions) {
+            this.formId = formId;
+            this.title = title;
+            this.content = content;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.isAnonymous = isAnonymous;
+            this.isMandatory = isMandatory;
+            this.groups = groups;
+            this.questions = questions;
+        }
+    }
+    // 선택 참여
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class RegisterGroupRes {
+        private Long groupId;
+        private String groupName;
+
+        @Builder
+        public RegisterGroupRes(Long groupId, String groupName) {
+            this.groupId = groupId;
+            this.groupName = groupName;
+        }
+    }
+
+
+
+    // 설문 질문
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class RegisterQuestionRes {
+        private Long questionId;
+        private char type;
+        private String title;
+        private String content;
+        private List<RegisterOptionRes> options;
+
+        @Builder
+        public RegisterQuestionRes(Long questionId, char type, String title, String content, List<RegisterOptionRes> options) {
+            this.questionId = questionId;
+            this.type = type;
+            this.title = title;
+            this.content = content;
+            this.options = options;
+        }
+    }
+
+    // 설문 옵션
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class RegisterOptionRes {
+        private Long optionId;
+        private String option;
+
+        @Builder
+        public RegisterOptionRes(Long optionId, String option) {
+            this.optionId = optionId;
+            this.option = option;
+        }
     }
 
     /**

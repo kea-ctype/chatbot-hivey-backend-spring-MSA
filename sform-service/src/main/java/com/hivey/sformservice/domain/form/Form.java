@@ -3,6 +3,10 @@ package com.hivey.sformservice.domain.form;
 import com.hivey.sformservice.domain.question.Question;
 import com.hivey.sformservice.domain.space.Space;
 import com.hivey.sformservice.domain.space.SpaceMember;
+import com.hivey.sformservice.dto.form.FormRequestDto;
+import com.hivey.sformservice.dto.form.FormRequestDto.RegisterFormReq;
+import com.hivey.sformservice.dto.form.FormResponseDto;
+import com.hivey.sformservice.dto.form.FormResponseDto.RegisterFormRes;
 import com.hivey.sformservice.global.common.BaseTime;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -81,27 +85,27 @@ public class Form extends BaseTime {
     }
 
 
-//    public void saveForm(RegisterFormRequest form) {
-//        this.title = form.getTitle();
-//        this.content = form.getContent();
-//        this.startDate = form.getStartDate();
-//        this.endDate = form.getEndDate();
-//        this.isAnonymous = form.getIsAnonymous();
-//        this.isMandatory = form.getIsMandatory();
-//    }
+    public void saveForm(RegisterFormReq form) {
+        this.title = form.getTitle();
+        this.content = form.getContent();
+        this.startDate = form.getStartDate();
+        this.endDate = form.getEndDate();
+        this.isAnonymous = form.getIsAnonymous();
+        this.isMandatory = form.getIsMandatory();
+    }
 
-//    public void updateForm(RegisterFormRes form) {
-//        this.title = form.getTitle();
-//        this.content = form.getContent();
-//        this.startDate = form.getStartDate();
-//        this.endDate = form.getEndDate();
-//        this.isAnonymous = form.getIsAnonymous();
-//        this.isMandatory = form.getIsMandatory();
-//    }
+    public void updateForm(RegisterFormRes form) {
+        this.title = form.getTitle();
+        this.content = form.getContent();
+        this.startDate = form.getStartDate();
+        this.endDate = form.getEndDate();
+        this.isAnonymous = form.getIsAnonymous();
+        this.isMandatory = form.getIsMandatory();
+    }
 
-//    public void deleteStatus(char status) {
-//        this.status = status;
-//    }
+    public void deleteStatus(char status) {
+        this.status = status;
+    }
 
 
 }
