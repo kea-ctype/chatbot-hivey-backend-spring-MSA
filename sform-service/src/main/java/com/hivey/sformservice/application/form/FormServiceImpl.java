@@ -4,7 +4,10 @@ import com.hivey.sformservice.dao.form.*;
 import com.hivey.sformservice.dao.space.SpaceGroupRepository;
 import com.hivey.sformservice.dao.space.SpaceMemberRepository;
 import com.hivey.sformservice.dao.space.SpaceRepository;
+import com.hivey.sformservice.domain.answer.Answer;
+import com.hivey.sformservice.domain.answer.MultipleChoiceAnswer;
 import com.hivey.sformservice.domain.form.Form;
+import com.hivey.sformservice.domain.form.FormTargetGroup;
 import com.hivey.sformservice.domain.form.Submission;
 import com.hivey.sformservice.domain.question.MultipleChoiceOption;
 import com.hivey.sformservice.domain.question.Question;
@@ -12,9 +15,8 @@ import com.hivey.sformservice.domain.space.Space;
 import com.hivey.sformservice.domain.space.SpaceGroup;
 import com.hivey.sformservice.domain.space.SpaceMember;
 import com.hivey.sformservice.dto.form.FormRequestDto;
-import com.hivey.sformservice.dto.form.FormRequestDto.RegisterFormReq;
-import com.hivey.sformservice.dto.form.FormRequestDto.RegisterQuestionReq;
-import com.hivey.sformservice.dto.form.FormResponseDto;
+import com.hivey.sformservice.dto.form.FormRequestDto.*;
+import com.hivey.sformservice.dto.form.FormRequestDto.ShortAnswerReq;
 import com.hivey.sformservice.dto.form.FormResponseDto.*;
 import com.hivey.sformservice.global.error.CustomException;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +28,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static com.hivey.sformservice.global.config.BaseResponseStatus.*;
 
 @Slf4j
 @Service
-// final 있는 필드만 생성자 만들어줌 -> 이렇게 하면 @Autowired 역할도 같이 해주는 건가?
+// final 있는 필드만 생성자 만들어줌 -> 이렇게 하면 @Autowired 역할도 같이 해주는 건가? 네
 @RequiredArgsConstructor
 public class FormServiceImpl implements FormService {
 
@@ -44,8 +45,13 @@ public class FormServiceImpl implements FormService {
     private final FormTargetGroupRepository formTargetGroupRepository;
     private final QuestionRepository questionRepository;
     private final MultipleChoiceOptionRepository multipleChoiceOptionRepository;
+    private final MultipleChoiceAnswerRepository multipleChoiceAnswerRepository;
+    private final AnswerRepository answerRepository;
 
 
+    /**
+     * 4.1 설문지 생성하기 (+ 버튼) !!
+     */
     @Override
     @Transactional
     public RegisterRes createForm(Long spaceId, Long userId) {
@@ -66,6 +72,9 @@ public class FormServiceImpl implements FormService {
         return new RegisterRes(createForm.getFormId());
     }
 
+    /**
+     * 4.2 설문지 생성하기 : All
+     */
     @Override
     @Transactional
     public RegisterFormRes registerForm(Long formId, RegisterFormReq registerFormReq) {
@@ -181,6 +190,196 @@ public class FormServiceImpl implements FormService {
 
         return registerFormRes;
     }
+
+    /**
+     * 4.3 스페이스의 모든 설문 불러오기
+     */
+    @Override
+    @Transactional
+    public List<FormListBySpaceRes> getSpaceForms(Long spaceId, Long userId) {
+
+        List<FormListBySpaceRes> getSpaceForms = new ArrayList<>();
+
+        //spaceId로 space 정보 가져오기
+        Space findSpace = spaceRepository.findById(spaceId).orElseThrow(() -> new CustomException(NOT_EXIST_SPACE));
+
+        //userId가 해당 space member인지 확인
+        SpaceMember spaceMember = spaceMemberRepository.findOneByUserIdAndSpace(userId, findSpace).orElseThrow(() -> new CustomException(NOT_EXISTS_SPACE_MEMBER));
+
+        List<Form> forms = formRepository.findAllBySpace(findSpace);
+
+        for (Form f : forms) {
+            // 각 설문에 대한 사용자의 참여 현황을 가져온다.
+            boolean checkJoin = false;
+
+            checkJoin = submissionRepository
+                    .findOneByFormAndMember(f, spaceMember).isPresent();
+
+            if (f.getStartDate() != null && f.getEndDate() != null) {
+                getSpaceForms.add(FormListBySpaceRes.builder()
+                        .formId(f.getFormId())
+                        .title(f.getTitle())
+                        .startDate(f.getStartDate())
+                        .endDate(f.getEndDate())
+                        .checkJoin(checkJoin)
+                        .build());
+            }
+
+        }
+
+        return getSpaceForms;
+    }
+
+    /**
+     * 4.4 특정 설문지 불러오기(질문 조회하기)
+     */
+    @Override
+    @Transactional
+    public RegisterFormRes getForm(Long formId) {
+        //form 정보 가져오기
+        Form form = formRepository.findById(formId).orElseThrow(() -> new CustomException(NOT_EXISTS_FORM));
+        //form status = 'Y'
+        if (form.getStatus() == 'Y') {
+            char isMandatory = form.getIsMandatory();
+            //선택 참여 정보 가져오기
+            List<FormTargetGroup> groups = formTargetGroupRepository.findAllByForm(form);
+
+            // Question 정보 가져오기
+            List<Question> questions = questionRepository.findAllByForm(form);
+            List<RegisterQuestionRes> getQuestions = new ArrayList<>();
+            List<RegisterGroupRes> getGroups = new ArrayList<>();
+
+            //선택 참여일 경우
+            if (isMandatory == 'N') {
+                //그룹 정보 가져오기
+                for (int i = 0; i < groups.size(); i++) {
+                    FormTargetGroup formTargetGroup = formTargetGroupRepository.findById(groups.get(i).getTargetId()).orElseThrow(() -> new CustomException(NOT_EXISTS_FORM_TARGET_GROUP));
+                    getGroups.add(RegisterGroupRes.builder()
+                            .groupId(formTargetGroup.getGroup().getGroupId())
+                            .groupName(formTargetGroup.getGroup().getName())
+                            .build());
+                }
+            }
+            for (Question q : questions) {
+                //question status = 'Y'
+                if (q.getStatus() == 'Y') {
+                    //객관식 질문일 경우
+                    if (q.getType() == 'M') {
+                        // Question Option 정보 가져오기
+                        List<MultipleChoiceOption> options = multipleChoiceOptionRepository.findAllByQuestion(q);
+                        List<RegisterOptionRes> getOptions = new ArrayList<>();
+                        for (MultipleChoiceOption option : options) {
+                            //Option status = 'Y'
+                            if (option.getStatus() == 'Y') {
+                                getOptions.add(RegisterOptionRes.builder()
+                                        .optionId(option.getOptionId())
+                                        .option(option.getOptionContent())
+                                        .build());
+                            }
+                        }
+                        getQuestions.add(RegisterQuestionRes.builder()
+                                .questionId(q.getQuestionId())
+                                .type(q.getType())
+                                .title(q.getTitle())
+                                .content(q.getContent())
+                                .options(getOptions)
+                                .build());
+
+                    } else {
+                        getQuestions.add(RegisterQuestionRes.builder()
+                                .questionId(q.getQuestionId())
+                                .type(q.getType())
+                                .title(q.getTitle())
+                                .content(q.getContent())
+                                .build());
+
+                        log.debug(getQuestions.get(getQuestions.size() - 1).getQuestionId().toString());
+
+                    }
+                }
+            }
+            RegisterFormRes getForm = RegisterFormRes.builder()
+                    .formId(formId)
+                    .title(form.getTitle())
+                    .content(form.getContent())
+                    .startDate(form.getStartDate())
+                    .endDate(form.getEndDate())
+                    .isAnonymous(form.getIsAnonymous())
+                    .isMandatory(form.getIsMandatory())
+                    .groups(getGroups)
+                    .questions(getQuestions)
+                    .build();
+
+            return getForm;
+        } else {
+            //form status='N'이면 존재하지 않은 form validation
+            throw new CustomException(NOT_EXISTS_FORM);
+        }
+    }
+
+    /**
+     * 5.1 설문 참여하기(=설문 응답하기)
+     */
+    @Transactional
+    public char saveFormAnswer(Long formId, Long userId, FormAnswerReq formAnswerReq) {
+        // 설문 식별 번호로부터 설문 객체와 스페이스 객체를 가져온다.
+        Form form = formRepository.findById(formId).orElseThrow(() -> new CustomException(NOT_EXISTS_FORM));
+        Space space = form.getSpace();
+
+        log.debug("Form title: {}", form.getTitle());
+        log.debug("Space name: {}", space.getName());
+
+        SpaceMember spaceMember = spaceMemberRepository.findOneByUserIdAndSpace(userId, space).orElseThrow(() -> new CustomException(NOT_EXISTS_SPACE_MEMBER));
+
+
+        // formAnswerRequestDto로부터 받은 값을 데이터베이스에 저장한다.
+
+        // 객관식 질문에 대한 응답을 저장한다.
+        for (MultipleChoiceAnswerReq multipleChoiceAnswerRequestDto : formAnswerReq.getMultipleChoiceAnswers()) {
+            Question question = questionRepository.findById(multipleChoiceAnswerRequestDto.getQuestionId()).orElseThrow(() -> new CustomException(NOT_EXISTS_QUESTION));
+
+            List<MultipleChoiceOption> options = new ArrayList<>();
+
+            for (Long optionId : multipleChoiceAnswerRequestDto.getOptionIds()) {
+                options.add(multipleChoiceOptionRepository.findById(optionId).orElseThrow(() -> new CustomException(NOT_EXISTS_OPTION)));
+            }
+
+            for (MultipleChoiceOption option : options) {
+
+                multipleChoiceAnswerRepository.save(MultipleChoiceAnswer.builder()
+                        .member(spaceMember)
+                        .option(option)
+                        .status('Y')
+                        .build());
+
+                log.debug("Option content: {}", option.getOptionContent());
+            }
+        }
+
+        // 주관식 질문에 대한 응답을 저장한다.
+        for (ShortAnswerReq shortAnswerRequestDto : formAnswerReq.getShortAnswerResponses()) {
+            Question question = questionRepository.findById(shortAnswerRequestDto.getQuestionId()).orElseThrow(() -> new CustomException(NOT_EXISTS_QUESTION));
+            String shortAnswer = shortAnswerRequestDto.getAnswer();
+
+            log.debug("Question id: {}", question.getQuestionId());
+            log.debug("Short answer: {}", shortAnswer);
+
+            Answer answerRes = answerRepository.save(Answer.builder()
+                    .member(spaceMember)
+                    .question(question)
+                    .answer(shortAnswer)
+                    .status('Y')
+                    .build());
+        }
+
+        // 해당 멤버의 설문 참여 현황을 업데이트한다.
+        Submission submission = submissionRepository.findOneByFormAndMember(form, spaceMember).orElseThrow(() -> new CustomException(NOT_EXISTS_SUBMISSION));
+        submission.updateIsSubmit('Y');
+
+        Submission updatedSubmission = submissionRepository.save(submission);
+        return updatedSubmission.getIsSubmit();
+    }
+
 
 }
 

@@ -97,6 +97,28 @@ public class FormResponseDto {
     }
 
     /**
+     * 스페이스 설문 조회
+     */
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class FormListBySpaceRes {
+        private Long formId;
+        private String title;
+        private Date startDate;
+        private Date endDate;
+        private boolean checkJoin; //참여 여부
+
+        @Builder
+        public FormListBySpaceRes(Long formId, String title, Date startDate, Date endDate, boolean checkJoin) {
+            this.formId = formId;
+            this.title = title;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.checkJoin = checkJoin;
+        }
+    }
+
+    /**
      * 스페이스에 해당하는 설문 목록을 불러올 때 사용하는 DTO
      */
     @Data
@@ -135,6 +157,23 @@ public class FormResponseDto {
             this.formId = formId;
             this.title = title;
             this.isMandatory = isMandatory;
+        }
+    }
+
+    /**
+     * 5.1 설문 참여하기(=설문 응답하기)
+     * - 주관식 질문에 대한 응답
+     */
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class ShortAnswerReq {
+        private Long questionId;
+        private String answer;
+
+        @Builder
+        public ShortAnswerReq(Long questionId, String answer) {
+            this.questionId = questionId;
+            this.answer = answer;
         }
     }
 
