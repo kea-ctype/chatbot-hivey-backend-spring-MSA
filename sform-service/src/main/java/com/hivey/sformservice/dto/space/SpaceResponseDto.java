@@ -27,6 +27,26 @@ public class SpaceResponseDto {
     }
 
     /**
+     * 3.4 참여한 스페이스 목록 불러오기
+     */
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class SpaceListRes {
+        private Long spaceId;
+        private String name;
+        private String img;
+        private int isManager;
+
+        @Builder
+        public SpaceListRes(Long spaceId, String name, String img, int isManager) {
+            this.spaceId = spaceId;
+            this.name = name;
+            this.img = img;
+            this.isManager = isManager;
+        }
+    }
+
+    /**
      * 3.5 스페이스 조회하기
      */
     @Data

@@ -8,15 +8,12 @@ import com.hivey.sformservice.domain.form.Form;
 import com.hivey.sformservice.domain.space.Space;
 import com.hivey.sformservice.domain.space.SpaceGroup;
 import com.hivey.sformservice.domain.space.SpaceMember;
-import com.hivey.sformservice.dto.form.FormResponseDto;
 import com.hivey.sformservice.dto.form.FormResponseDto.FormListResponseDto;
-import com.hivey.sformservice.dto.group.SpaceGroupResponseDto;
 import com.hivey.sformservice.dto.group.SpaceGroupResponseDto.SpaceGroupListRes;
-import com.hivey.sformservice.dto.space.SpaceDataDto;
-import com.hivey.sformservice.dto.space.SpaceDataDto.GetUserRes;
 import com.hivey.sformservice.dto.space.SpaceRequestDto.SpaceCreateReq;
 import com.hivey.sformservice.dto.space.SpaceResponseDto.SpaceCreateRes;
 import com.hivey.sformservice.dto.space.SpaceResponseDto.SpaceInfoRes;
+import com.hivey.sformservice.dto.space.SpaceResponseDto.SpaceListRes;
 import com.hivey.sformservice.global.common.RandomString;
 import com.hivey.sformservice.global.error.CustomException;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +24,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.hivey.sformservice.global.config.BaseResponseStatus.*;
 
@@ -158,5 +158,44 @@ public class SpaceServiceImpl implements SpaceService{
         }
 
         throw new CustomException(FAILED_TO_GET_SPACE_INFO);
+    }
+
+    /**
+     * 3.4 참여한 스페이스 목록 불러오기
+     */
+    public List<SpaceListRes> findAllByUserId(Long userId) {
+        List<SpaceListRes> spaceListDtosAsManager = new ArrayList<>();
+        List<SpaceListRes> spaceListDtosAsParticipant = new ArrayList<>();
+        List<SpaceListRes> spaceListDtos;
+
+
+        // SpaceMember 테이블로부터 사용자가 가입한 스페이스 정보를 가져온다.
+        List<SpaceMember> spaceMembers = spaceMemberRepository.findAllByUserId(userId);
+
+        for (SpaceMember spaceMember : spaceMembers) {
+
+            if (spaceMember.getPosition() == 'M') {
+                // 관리자인 경우
+                spaceListDtosAsManager.add(SpaceListRes.builder().spaceId(spaceMember.getSpace().getSpaceId())
+                        .name(spaceMember.getSpace().getName())
+                        .img(spaceMember.getSpace().getImg())
+                        .isManager(1).build());
+
+            } else {
+                // 회원인 경우
+                spaceListDtosAsParticipant.add(SpaceListRes.builder()
+                        .spaceId(spaceMember.getSpace().getSpaceId())
+                        .name(spaceMember.getSpace().getName())
+                        .img(spaceMember.getSpace().getImg())
+                        .isManager(0)
+                        .build());
+            }
+        }
+
+        spaceListDtos = Stream.of(spaceListDtosAsManager, spaceListDtosAsParticipant)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+
+        return spaceListDtos;
     }
 }
