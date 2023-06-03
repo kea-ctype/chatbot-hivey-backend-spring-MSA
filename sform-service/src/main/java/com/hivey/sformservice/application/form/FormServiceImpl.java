@@ -21,6 +21,7 @@ import com.hivey.sformservice.dto.form.FormResponseDto.*;
 import com.hivey.sformservice.global.error.CustomException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,8 @@ public class FormServiceImpl implements FormService {
     private final MultipleChoiceOptionRepository multipleChoiceOptionRepository;
     private final MultipleChoiceAnswerRepository multipleChoiceAnswerRepository;
     private final AnswerRepository answerRepository;
+
+
 
 
     /**
@@ -321,6 +324,7 @@ public class FormServiceImpl implements FormService {
      * 5.1 설문 참여하기(=설문 응답하기)
      */
     @Transactional
+    @Override
     public char saveFormAnswer(Long formId, Long userId, FormAnswerReq formAnswerReq) {
         // 설문 식별 번호로부터 설문 객체와 스페이스 객체를 가져온다.
         Form form = formRepository.findById(formId).orElseThrow(() -> new CustomException(NOT_EXISTS_FORM));
@@ -380,6 +384,92 @@ public class FormServiceImpl implements FormService {
         return updatedSubmission.getIsSubmit();
     }
 
+    /**
+     * 특정 설문지 조회 - 질문 & 답변
+     */
+    @Override
+    @Transactional
+    public GetFormRes getFormAndAnswer(Long formId, Long userId) {
 
+        ModelMapper modelMapper = new ModelMapper();
+        //form 존재 여부
+        Form form = formRepository.findById(formId).orElseThrow(() -> new CustomException(NOT_EXISTS_FORM));
+
+        //space 존재 여부
+        Space space = spaceRepository.findById(form.getSpace().getSpaceId()).orElseThrow(() -> new CustomException(NOT_EXIST_SPACE));
+
+        //user가 해당 스페이스 멤버인지 확인
+        SpaceMember spaceMember = spaceMemberRepository.findOneByUserIdAndSpace(userId, space).orElseThrow(() -> new CustomException(NOT_EXISTS_SPACE_MEMBER));
+
+        //응답 여부
+        Submission submission = submissionRepository.findOneByFormAndMember(form, spaceMember).orElseThrow(() -> new CustomException(NOT_EXISTS_SUBMISSION));
+        if (submission.getIsSubmit() == 'Y') {
+            //question Response 생성
+            List<GetQuestionRes> questionRes = new ArrayList<>();
+
+            //질문 리스트
+            List<Question> questions = questionRepository.findAllByForm(form);
+            for (Question question : questions) {
+                //객관식 질문일 경우
+                if (question.getType() == 'M') {
+                    // Question Option 정보 가져오기
+                    List<MultipleChoiceOption> options = multipleChoiceOptionRepository.findAllByQuestion(question);
+                    //option Response 생성
+                    List<GetOptionRes> optionRes = new ArrayList<>();
+                    //객관식 옵션 응답 Response 생성
+                    List<GetAnswerOptionRes> answerOptionRes = new ArrayList<>();
+                    for (MultipleChoiceOption option : options) {
+                        //option Response 추가
+                        optionRes.add(modelMapper.map(option, GetOptionRes.class));
+
+
+                        //optionAnswer Response 추가
+                        List<MultipleChoiceAnswer> multiAnswer = multipleChoiceAnswerRepository.findAllByOptionAndMember(option, spaceMember);
+                        for (MultipleChoiceAnswer optionAnswer : multiAnswer) {
+                            answerOptionRes.add(modelMapper.map(optionAnswer, GetAnswerOptionRes.class));
+
+
+                        }
+                    }
+                    //질문 Response 추가
+                    questionRes.add(GetQuestionRes.builder()
+                            .questionId(question.getQuestionId())
+                            .type(question.getType())
+                            .title(question.getTitle())
+                            .content(question.getContent())
+                            .options(optionRes)
+                            .answerOptions(answerOptionRes)
+                            .build());
+
+                } else {
+                    //서술형 응답 Response 추가
+                    Answer shortAnswer = answerRepository.findOneByQuestionAndMember(question, spaceMember);
+                    GetAnswerRes getAnswerRes = modelMapper.map(shortAnswer, GetAnswerRes.class);
+                    questionRes.add(GetQuestionRes.builder()
+                            .questionId(question.getQuestionId())
+                            .type(question.getType())
+                            .title(question.getTitle())
+                            .content(question.getContent())
+                            .answer(getAnswerRes)
+                            .build());
+
+                }
+            }
+            //form Response 추가
+            GetFormRes getFormRes = GetFormRes.builder()
+                    .formId(form.getFormId())
+                    .title(form.getTitle())
+                    .content(form.getContent())
+                    .creator(userId)
+                    .startDate(form.getStartDate())
+                    .endDate(form.getEndDate())
+                    .questions(questionRes)
+                    .build();
+            return getFormRes;
+
+        }
+
+        throw new CustomException(FAILED_TO_GET_FORM);
+    }
 }
 

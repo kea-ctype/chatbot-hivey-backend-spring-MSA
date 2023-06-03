@@ -4,7 +4,9 @@ package com.hivey.sformservice.application.form;
 import com.hivey.sformservice.dto.form.FormRequestDto;
 import com.hivey.sformservice.dto.form.FormRequestDto.FormAnswerReq;
 import com.hivey.sformservice.dto.form.FormRequestDto.RegisterFormReq;
+import com.hivey.sformservice.dto.form.FormResponseDto;
 import com.hivey.sformservice.dto.form.FormResponseDto.FormListBySpaceRes;
+import com.hivey.sformservice.dto.form.FormResponseDto.GetFormRes;
 import com.hivey.sformservice.dto.form.FormResponseDto.RegisterFormRes;
 import com.hivey.sformservice.dto.form.FormResponseDto.RegisterRes;
 
@@ -21,6 +23,8 @@ public interface FormService {
     RegisterFormRes getForm(Long formId);
 
     char saveFormAnswer(Long formId, Long userId, FormAnswerReq formAnswerReq);
+
+    GetFormRes getFormAndAnswer(Long formId, Long userId);
 
 
 }

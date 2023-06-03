@@ -177,5 +177,97 @@ public class FormResponseDto {
         }
     }
 
+    /**
+     * 특정 설문지 조회 - 질문 & 답변
+     */
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class GetFormRes {
+        private Long formId;
+        private String title;
+        private String content;
+        private Long creator; //creator userId
+        private Date startDate;
+        private Date endDate;
+        private List<GetQuestionRes> questions;
+
+        @Builder
+        public GetFormRes(Long formId, String title, String content, Long creator, Date startDate, Date endDate, List<GetQuestionRes> questions) {
+            this.formId = formId;
+            this.title = title;
+            this.content = content;
+            this.creator = creator;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.questions = questions;
+        }
+    }
+
+    // 설문 질문
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class GetQuestionRes {
+        private Long questionId;
+        private char type;
+        private String title;
+        private String content;
+        private List<GetOptionRes> options;
+        private GetAnswerRes answer;
+        private List<GetAnswerOptionRes> answerOptions;
+
+        @Builder
+        public GetQuestionRes(Long questionId, char type, String title, String content, List<GetOptionRes> options, GetAnswerRes answer, List<GetAnswerOptionRes> answerOptions) {
+            this.questionId = questionId;
+            this.type = type;
+            this.title = title;
+            this.content = content;
+            this.options = options;
+            this.answer = answer;
+            this.answerOptions = answerOptions;
+        }
+    }
+
+    // 설문 옵션
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class GetOptionRes {
+        private Long optionId;
+        private String optionContent;
+
+        @Builder
+        public GetOptionRes(Long optionId, String optionContent) {
+            this.optionId = optionId;
+            this.optionContent = optionContent;
+        }
+    }
+
+    // 설문 응답
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class GetAnswerRes {
+        private Long answerId;
+        private String answer;
+
+        @Builder
+        public GetAnswerRes(Long answerId, String answer) {
+            this.answerId = answerId;
+            this.answer = answer;
+        }
+    }
+
+    // 설문 옵션 응답
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class GetAnswerOptionRes {
+        private Long answerId;
+        private Long optionId; //선택한 옵션
+
+        @Builder
+        public GetAnswerOptionRes(Long answerId, Long optionId) {
+            this.answerId = answerId;
+            this.optionId = optionId;
+        }
+    }
+
 
 }

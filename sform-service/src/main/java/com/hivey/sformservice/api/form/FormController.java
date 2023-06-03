@@ -74,5 +74,13 @@ public class FormController {
 
     }
 
+    /**
+     * 5.2 특정 설문지 불러오기(질문 & 답변 조회하기)
+     */
+    @GetMapping("/{formId}/{userId}/answers")
+    public BaseResponse<GetFormRes> getFormAndAnswer(@PathVariable Long formId, @PathVariable Long userId){
+        return new BaseResponse<>(formService.getFormAndAnswer(formId, userId));
+    }
+
 
 }

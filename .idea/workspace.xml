@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e980b3-ed4a-4741-91f7-006c396a19d4" name="변경" comment="feat : 4.2 설문 생성 구현">
+    <list default="true" id="f7e980b3-ed4a-4741-91f7-006c396a19d4" name="변경" comment="feat : 5.1 설문 참여">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway-service/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/api/form/FormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/api/form/FormController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormService.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/FormTargetGroupRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/FormTargetGroupRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/AnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/AnswerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/MultipleChoiceAnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/MultipleChoiceAnswerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/form/FormResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/form/FormResponseDto.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +165,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1685599142115</updated>
-      <workItem from="1685599143129" duration="49777000" />
+      <workItem from="1685599143129" duration="63940000" />
     </task>
     <task id="LOCAL-00001" summary="feat : sform-service 구현">
       <created>1685601804465</created>
@@ -228,7 +230,21 @@
       <option name="project" value="LOCAL" />
       <updated>1685713824399</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="refactor : 4.2 설문 생성 구현 코드 수정">
+      <created>1685717483086</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1685717483086</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat : 5.1 설문 참여">
+      <created>1685724683837</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1685724683837</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,6 +260,8 @@
     <MESSAGE value="feat : 3.3 특정 스페이스 그룹 멤버 목록만 불러오기" />
     <MESSAGE value="feat : 4.1 설문지 생성(+버튼)" />
     <MESSAGE value="feat : 4.2 설문 생성 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat : 4.2 설문 생성 구현" />
+    <MESSAGE value="refactor : 4.2 설문 생성 구현 코드 수정" />
+    <MESSAGE value="feat : 5.1 설문 참여" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : 5.1 설문 참여" />
   </component>
 </project>
