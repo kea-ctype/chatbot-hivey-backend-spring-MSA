@@ -8,6 +8,7 @@ import com.hivey.userservice.dto.UserResponseDto;
 import com.hivey.userservice.dto.UserResponseDto.GetUserRes;
 import com.hivey.userservice.dto.UserResponseDto.UserRes;
 import com.hivey.userservice.global.config.BaseResponse;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -25,6 +26,7 @@ public class UserController {
 
 
     @GetMapping("/health_check")
+    @Timed(value = "users.status", longTask = true)
     public String status() {
 
         return String.format("It's Working in User Service"
@@ -40,6 +42,7 @@ public class UserController {
      * 회원가입
      */
     @PostMapping("/auth")
+    @Timed(value = "users.register", longTask = true)
     public BaseResponse<UserRes> register(@RequestBody UserRegisterRequestDto user){
         log.debug("user: {}", user.toString());
         UserRes registerUser = userService.register(user);
@@ -52,8 +55,9 @@ public class UserController {
      *  사용자 정보 조회
      */
     @GetMapping("/users/{userId}")
-    public BaseResponse<GetUserRes> getUser(@PathVariable Long userId) {
+    @Timed(value = "users.userInfo", longTask = true)
+    public GetUserRes getUser(@PathVariable Long userId) {
         GetUserRes getUserRes = userService.getUserByUserId(userId);
-        return new BaseResponse<>(getUserRes);
+        return getUserRes;
     }
 }

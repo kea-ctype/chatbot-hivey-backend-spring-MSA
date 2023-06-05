@@ -31,6 +31,10 @@ dependencies {
 
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
+    // https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+
     //h2
     runtimeOnly 'com.h2database:h2:1.3.176'
 
@@ -48,8 +52,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // feign
-    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
-
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     //mysql
 //    runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'

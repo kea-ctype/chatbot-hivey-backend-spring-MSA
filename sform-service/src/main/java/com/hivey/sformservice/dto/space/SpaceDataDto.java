@@ -8,12 +8,5 @@ import java.io.Serializable;
 
 public class SpaceDataDto {
 
-    @Data
-    @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class GetUserRes implements Serializable {
-        private Long userId;
-        private String img;
-        private String name;
 
-    }
 }

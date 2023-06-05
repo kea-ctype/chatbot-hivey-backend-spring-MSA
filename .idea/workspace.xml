@@ -4,14 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e980b3-ed4a-4741-91f7-006c396a19d4" name="변경" comment="feat : 5.1 설문 참여">
+    <list default="true" id="f7e980b3-ed4a-4741-91f7-006c396a19d4" name="변경" comment="feat : 5.2 특정 설문지 불러오기(질문 &amp; 답변 조회하기)">
+      <change afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/client/UserServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sform-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/SformServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/SformServiceApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/api/form/FormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/api/form/FormController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormService.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/space/SpaceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/space/SpaceServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/AnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/AnswerRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/MultipleChoiceAnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/MultipleChoiceAnswerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/form/FormDataDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/form/FormDataDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/form/FormResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/form/FormResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/space/SpaceDataDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/space/SpaceDataDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sform-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/api/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/api/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/dto/UserResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/dto/UserResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,9 +98,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "프로젝트",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.last.edited": "라이브러리",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -96,7 +112,7 @@
       <recent name="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/global" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.SformServiceApplication">
+  <component name="RunManager" selected="Spring Boot.ApigatewayServiceApplication">
     <configuration name="ApigatewayServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="apigateway-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.ctype.apigatewayservice.ApigatewayServiceApplication" />
@@ -165,7 +181,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1685599142115</updated>
-      <workItem from="1685599143129" duration="63940000" />
+      <workItem from="1685599143129" duration="97876000" />
     </task>
     <task id="LOCAL-00001" summary="feat : sform-service 구현">
       <created>1685601804465</created>
@@ -244,7 +260,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685724683837</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="feat : 5.2 특정 설문지 불러오기(질문 &amp; 답변 조회하기)">
+      <created>1685792664109</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1685792664109</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,6 +285,7 @@
     <MESSAGE value="feat : 4.2 설문 생성 구현" />
     <MESSAGE value="refactor : 4.2 설문 생성 구현 코드 수정" />
     <MESSAGE value="feat : 5.1 설문 참여" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat : 5.1 설문 참여" />
+    <MESSAGE value="feat : 5.2 특정 설문지 불러오기(질문 &amp; 답변 조회하기)" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : 5.2 특정 설문지 불러오기(질문 &amp; 답변 조회하기)" />
   </component>
 </project>

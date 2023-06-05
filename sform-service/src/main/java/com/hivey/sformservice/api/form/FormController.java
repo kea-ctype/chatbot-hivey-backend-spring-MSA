@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.util.List;
 
 import static com.hivey.sformservice.dto.form.FormRequestDto.*;
@@ -80,6 +81,39 @@ public class FormController {
     @GetMapping("/{formId}/{userId}/answers")
     public BaseResponse<GetFormRes> getFormAndAnswer(@PathVariable Long formId, @PathVariable Long userId){
         return new BaseResponse<>(formService.getFormAndAnswer(formId, userId));
+    }
+
+    /**
+     * 5.3 특정 설문 참여 현황 목록 불러오기
+     */
+    @GetMapping("/{formId}/members")
+    public BaseResponse<List<FormGetSubmissionList>> getSubmissionList(@PathVariable Long formId) {
+
+        return new BaseResponse<>(formService.findSubmissionListByFormId(formId));
+    }
+
+    /**
+     * 5.4 특정 설문의 타겟 그룹 목록 불러오기
+     */
+    @GetMapping("/{formId}/groups")
+    public BaseResponse<List<TargetGroupsByFormRes>> getTargetGroupsByForm(@PathVariable Long formId) {
+        return new BaseResponse<>(formService.findAllTargetGroupsByFormId(formId));
+    }
+
+    /**
+     * 5.5 특정 설문의 필수 여부 정보 가져오기
+     */
+    @GetMapping("/{formId}/option")
+    public BaseResponse<FormMandatoryOrNotRes> getMandatoryOrNotByForm(@PathVariable Long formId) {
+        return new BaseResponse<>(formService.findIsMandatoryByForm(formId));
+    }
+
+    /**
+     * 5.6 설문 결과 보기
+     */
+    @GetMapping("/{formId}/result")
+    public BaseResponse<GetFormResultRes> getFormResult(@PathVariable Long formId) {
+        return new BaseResponse<>(formService.getFormResult(formId));
     }
 
 

@@ -5,10 +5,7 @@ import com.hivey.sformservice.dto.form.FormRequestDto;
 import com.hivey.sformservice.dto.form.FormRequestDto.FormAnswerReq;
 import com.hivey.sformservice.dto.form.FormRequestDto.RegisterFormReq;
 import com.hivey.sformservice.dto.form.FormResponseDto;
-import com.hivey.sformservice.dto.form.FormResponseDto.FormListBySpaceRes;
-import com.hivey.sformservice.dto.form.FormResponseDto.GetFormRes;
-import com.hivey.sformservice.dto.form.FormResponseDto.RegisterFormRes;
-import com.hivey.sformservice.dto.form.FormResponseDto.RegisterRes;
+import com.hivey.sformservice.dto.form.FormResponseDto.*;
 
 import java.util.List;
 
@@ -25,6 +22,16 @@ public interface FormService {
     char saveFormAnswer(Long formId, Long userId, FormAnswerReq formAnswerReq);
 
     GetFormRes getFormAndAnswer(Long formId, Long userId);
+
+    List<FormResponseDto.FormGetSubmissionList> findSubmissionListByFormId(Long formId);
+
+    List<FormResponseDto.TargetGroupsByFormRes> findAllTargetGroupsByFormId(Long formId);
+
+    FormMandatoryOrNotRes findIsMandatoryByForm(Long formId);
+
+    GetFormResultRes getFormResult(Long formId);
+
+
 
 
 }

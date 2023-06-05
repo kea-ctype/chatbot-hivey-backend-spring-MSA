@@ -11,4 +11,8 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel="multiple-choice-answer", path="multiple-choice-answer")
 public interface MultipleChoiceAnswerRepository extends JpaRepository<MultipleChoiceAnswer, Long> {
     List<MultipleChoiceAnswer> findAllByOptionAndMember(MultipleChoiceOption option, SpaceMember spaceMember);
+
+    List<MultipleChoiceAnswer> findAllByOption(MultipleChoiceOption multipleChoiceOption);
+
+    Long countByOption(MultipleChoiceOption multipleChoiceOption);
 }

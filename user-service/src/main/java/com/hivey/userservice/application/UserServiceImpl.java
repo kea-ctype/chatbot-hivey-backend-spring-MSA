@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -101,6 +102,7 @@ public class UserServiceImpl implements UserService{
      * 유저 조회
      */
     @Override
+    @Transactional(readOnly = true)
     public GetUserRes getUserByUserId(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(NOT_EXISTS_USER));
 

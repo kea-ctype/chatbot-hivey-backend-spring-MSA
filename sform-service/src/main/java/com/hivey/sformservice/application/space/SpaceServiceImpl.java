@@ -22,7 +22,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,7 +43,6 @@ public class SpaceServiceImpl implements SpaceService{
     private final SpaceGroupRepository spaceGroupRepository;
 
     private final Environment env;
-    private final RestTemplate restTemplate;
 
     /**
      * 3.1 스페이스 생성하기

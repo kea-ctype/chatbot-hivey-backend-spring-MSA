@@ -1,5 +1,7 @@
 package com.hivey.sformservice.dto.form;
 
+import com.hivey.sformservice.domain.question.MultipleChoiceOption;
+import com.hivey.sformservice.dto.form.FormDataDto.GetUserRes;
 import lombok.*;
 
 import java.util.Date;
@@ -26,6 +28,8 @@ public class FormResponseDto {
         private Long formId;
         private String title;
         private String content;
+        private String creator;
+        private String formLink;
         private Date startDate;
         private Date endDate;
         private char isAnonymous;
@@ -34,10 +38,12 @@ public class FormResponseDto {
         private List<RegisterQuestionRes> questions;
 
         @Builder
-        public RegisterFormRes(Long formId, String title, String content, Date startDate, Date endDate, char isAnonymous, char isMandatory, List<RegisterGroupRes> groups, List<RegisterQuestionRes> questions) {
+        public RegisterFormRes(Long formId, String title, String content, String creator, String formLink, Date startDate, Date endDate, char isAnonymous, char isMandatory, List<RegisterGroupRes> groups, List<RegisterQuestionRes> questions) {
             this.formId = formId;
             this.title = title;
             this.content = content;
+            this.creator = creator;
+            this.formLink = formLink;
             this.startDate = startDate;
             this.endDate = endDate;
             this.isAnonymous = isAnonymous;
@@ -268,6 +274,134 @@ public class FormResponseDto {
             this.optionId = optionId;
         }
     }
+
+    /**
+     * 설문 참여 현황 목록 불러올 때 사용하는 DTO
+     */
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class FormGetSubmissionList{
+        // 설문에 대한 정보
+        private Long formId;
+        private boolean isMandatory;
+
+        // 멤버 정보
+        private Long memberId;
+        private GetUserRes getUserRes;
+        private boolean isSubmit;
+
+        // 만약 선택 설문인 경우 아래에 값을 넣어 보내준다.
+        private Long groupId;
+
+        @Builder
+        public FormGetSubmissionList(Long formId, boolean isMandatory, Long memberId, GetUserRes getUserRes, boolean isSubmit, Long groupId) {
+            this.formId = formId;
+            this.isMandatory = isMandatory;
+            this.memberId = memberId;
+            this.getUserRes = getUserRes;
+            this.isSubmit = isSubmit;
+            this.groupId = groupId;
+        }
+    }
+
+    /**
+     * 특정 설문의 타겟 그룹
+     */
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class TargetGroupsByFormRes {
+        private Long formId;
+        private Long groupId;
+        private String groupName;
+
+        @Builder
+        public TargetGroupsByFormRes(Long formId, Long groupId, String groupName) {
+            this.formId = formId;
+            this.groupId = groupId;
+            this.groupName = groupName;
+        }
+    }
+
+    /**
+     * 설문 결과
+     */
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class GetFormResultRes {
+        private Long formId;
+        private String title;
+        private String content;
+        private String creator;
+        private String formLink;
+        private Date startDate;
+        private Date endDate;
+        private char isAnonymous;
+        private List<GetQuestionResult> getQuestionResults;
+
+        @Builder
+        public GetFormResultRes(Long formId, String title, String content, String creator, String formLink, Date startDate, Date endDate, char isAnonymous, List<GetQuestionResult> getQuestionResults) {
+            this.formId = formId;
+            this.title = title;
+            this.content = content;
+            this.creator = creator;
+            this.formLink = formLink;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.isAnonymous = isAnonymous;
+            this.getQuestionResults = getQuestionResults;
+        }
+    }
+
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class GetQuestionResult {
+        private Long questionId;
+        private String title;
+        private String content;
+        private List<MultipleAnswerResult> multipleAnswerResults;
+        private List<AnswerResult> answerResults;
+
+        @Builder
+        public GetQuestionResult(Long questionId, String title, String content, List<MultipleAnswerResult> multipleAnswerResults, List<AnswerResult> answerResults) {
+            this.questionId = questionId;
+            this.title = title;
+            this.content = content;
+            this.multipleAnswerResults = multipleAnswerResults;
+            this.answerResults = answerResults;
+        }
+    }
+
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class MultipleAnswerResult {
+        private Long optionId;
+        private String optionContent;
+        private Long count;
+
+        @Builder
+        public MultipleAnswerResult(Long optionId, String optionContent, Long count) {
+            this.optionId = optionId;
+            this.optionContent = optionContent;
+            this.count = count;
+        }
+    }
+    @Data
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class AnswerResult {
+        private Long answerId;
+        private String name;
+        private String answer;
+
+        @Builder
+        public AnswerResult(Long answerId, String name, String answer) {
+            this.answerId = answerId;
+            this.name = name;
+            this.answer = answer;
+        }
+    }
+
+
+
 
 
 }
