@@ -36,6 +36,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus
     implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'org.testng:testng:7.1.0'
 
 
     //h2
