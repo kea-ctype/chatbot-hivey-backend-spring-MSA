@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/spaces")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 class SpaceGroupController {
 

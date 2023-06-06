@@ -21,7 +21,7 @@ import static com.hivey.sformservice.global.config.BaseResponseStatus.SUCCESS;
 @RestController
 @RequestMapping("/forms")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FormController {
 
     private final FormService formService;

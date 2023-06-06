@@ -23,7 +23,7 @@ import static com.hivey.sformservice.global.config.BaseResponseStatus.FAILED_TO_
 @Slf4j
 @RestController
 @RequestMapping("/spaces")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 public class SpaceController {
 
