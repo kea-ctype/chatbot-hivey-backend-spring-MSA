@@ -10,10 +10,15 @@ import com.hivey.userservice.dto.UserResponseDto.GetUserRes;
 import com.hivey.userservice.dto.UserResponseDto.UserLoginRes;
 import com.hivey.userservice.dto.UserResponseDto.UserRes;
 import com.hivey.userservice.global.error.CustomException;
+import com.hivey.userservice.global.security.AuthenticationFilter;
 import com.hivey.userservice.mapper.UserMapper;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.hivey.userservice.global.config.BaseResponseStatus.*;
 import static java.time.LocalDateTime.now;
@@ -34,6 +40,7 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final AuthPasswordRepository authPasswordRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -51,13 +58,9 @@ public class UserServiceImpl implements UserService{
      * @return
      */
     @Override
+    @Transactional
     public UserRes register(UserRegisterRequestDto userRegisterRequestDto) {
-
-        // 클라이언트로부터 받은 DTO에서 email을 가진 유저 찾기
-        String email = userRegisterRequestDto.getEmail();
-        String password = userRegisterRequestDto.getPassword();
-        Long duplicateUser = userRepository.countByEmail(email);
-        log.debug("duplicateUser: {}", duplicateUser);
+        log.debug("user : {}", userRegisterRequestDto);
 
         try{
             // 암호화: postUserReq에서 제공받은 비밀번호를 보안을 위해 암호화시켜 DB에 저장합니다.
@@ -75,8 +78,12 @@ public class UserServiceImpl implements UserService{
 
             AuthPassword registerPassword = authPasswordRepository.save(UserMapper.INSTANCE.toAuthPassword(userId, userRegisterRequestDto));
 
-            String name = registerUser.getName();
-            UserRes userRes = new UserRes(userId, name);
+            UserRes userRes = UserRes.builder()
+                    .userId(registerUser.getUserId())
+                    .name(registerUser.getName())
+                    .email(registerUser.getEmail())
+                    .img(registerUser.getImg())
+                    .build();
             return userRes;
 
 
@@ -90,6 +97,7 @@ public class UserServiceImpl implements UserService{
      * success login
      */
     @Override
+    @Transactional
     public UserLoginRes getUserDetailsByEmail(String email) {
         User user = userRepository.findOneByEmail(email).orElseThrow(() -> new CustomException(NOT_EXISTS_USER));
         UserLoginRes userLoginRes = new ModelMapper().map(user, UserLoginRes.class);
@@ -110,7 +118,6 @@ public class UserServiceImpl implements UserService{
 
         return getUserRes;
     }
-
 
 
 

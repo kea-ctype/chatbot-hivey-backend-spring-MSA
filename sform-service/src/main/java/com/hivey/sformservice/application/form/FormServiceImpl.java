@@ -305,10 +305,15 @@ public class FormServiceImpl implements FormService {
                     }
                 }
             }
+            GetUserRes getUserRes = userServiceClient.getUsers(form.getCreator().getUserId());
+            String formLink = "http://hivey.com/surveys/" + form.getFormId();
+
             RegisterFormRes getForm = RegisterFormRes.builder()
                     .formId(formId)
                     .title(form.getTitle())
                     .content(form.getContent())
+                    .creator(getUserRes.getName())
+                    .formLink(formLink)
                     .startDate(form.getStartDate())
                     .endDate(form.getEndDate())
                     .isAnonymous(form.getIsAnonymous())
@@ -459,12 +464,16 @@ public class FormServiceImpl implements FormService {
 
                 }
             }
+            GetUserRes getUserRes = userServiceClient.getUsers(userId);
+            String formLink = "http://hivey.com/surveys/" + form.getFormId();
+
             //form Response 추가
             GetFormRes getFormRes = GetFormRes.builder()
                     .formId(form.getFormId())
                     .title(form.getTitle())
                     .content(form.getContent())
-                    .creator(userId)
+                    .creator(getUserRes.getName())
+                    .formLink(formLink)
                     .startDate(form.getStartDate())
                     .endDate(form.getEndDate())
                     .questions(questionRes)

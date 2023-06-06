@@ -1,5 +1,6 @@
 package com.hivey.userservice.global.security;
 
+import com.hivey.userservice.application.TokenBlacklistService;
 import com.hivey.userservice.application.UserService;
 import com.hivey.userservice.application.UserServiceImpl;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.servlet.http.HttpSession;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
@@ -17,6 +20,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private UserService userService;
     private BCryptPasswordEncoder bCryptPasswordEncode;
     private Environment env;
+    private TokenBlacklistService tokenBlacklistService;
 
     public WebSecurity(Environment env, UserServiceImpl userService, BCryptPasswordEncoder bCryptPasswordEncode) {
         this.env = env;
@@ -35,11 +39,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .hasIpAddress("172.16.228.152")
                 .and()
                 .addFilter(getAuthenticationFilter());
+
+
         http.headers().frameOptions().disable();
     }
 
     private AuthenticationFilter getAuthenticationFilter() throws Exception {
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager(), userService, env);
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager(), userService, env, tokenBlacklistService);
         //인증 처리
         authenticationFilter.setAuthenticationManager(authenticationManager());
 

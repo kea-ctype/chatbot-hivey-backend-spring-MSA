@@ -14,6 +14,15 @@ public class UserResponseDto {
     public static class UserRes implements Serializable {
         private Long userId;
         private String name;
+        private String email;
+        private String img;
+
+        public UserRes(Long userId, String name, String email, String img) {
+            this.userId = userId;
+            this.name = name;
+            this.email = email;
+            this.img = img;
+        }
 
         public UserRes(Long userId, String name) {
             this.userId = userId;

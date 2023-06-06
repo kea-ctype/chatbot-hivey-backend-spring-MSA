@@ -192,21 +192,26 @@ public class FormResponseDto {
         private Long formId;
         private String title;
         private String content;
-        private Long creator; //creator userId
+        private String creator;
+        private String formLink;
         private Date startDate;
         private Date endDate;
         private List<GetQuestionRes> questions;
 
+
         @Builder
-        public GetFormRes(Long formId, String title, String content, Long creator, Date startDate, Date endDate, List<GetQuestionRes> questions) {
+        public GetFormRes(Long formId, String title, String content, String creator, String formLink, Date startDate, Date endDate, List<GetQuestionRes> questions) {
             this.formId = formId;
             this.title = title;
             this.content = content;
             this.creator = creator;
+            this.formLink = formLink;
             this.startDate = startDate;
             this.endDate = endDate;
             this.questions = questions;
         }
+
+
     }
 
     // 설문 질문

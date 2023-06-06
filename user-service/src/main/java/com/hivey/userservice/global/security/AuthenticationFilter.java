@@ -1,12 +1,16 @@
 package com.hivey.userservice.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hivey.userservice.application.TokenBlacklistService;
 import com.hivey.userservice.application.UserService;
 import com.hivey.userservice.dto.UserRequestDto.UserLoginRequestDto;
 import com.hivey.userservice.dto.UserResponseDto.UserLoginRes;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -27,13 +33,16 @@ import java.util.Date;
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private UserService userService;
     private Environment env;
+    private TokenBlacklistService tokenBlacklistService;
 
     public AuthenticationFilter(AuthenticationManager authenticationManager,
                                 UserService userService,
-                                Environment env) {
+                                Environment env,
+                                TokenBlacklistService tokenBlacklistService) {
         super.setAuthenticationManager(authenticationManager);
         this.userService = userService;
         this.env = env;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
 
     @Override
@@ -71,4 +80,20 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         response.addHeader("token", token);
         response.addHeader("userId", String.valueOf(userDetails.getUserId()));
     }
+
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request,
+                                              HttpServletResponse response,
+                                              AuthenticationException failed) throws IOException, ServletException {
+        // 인증 실패 시 JWT를 블랙리스트에 추가
+        String token = request.getHeader("Authorization");
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7); // "Bearer " 부분을 제외하고 토큰만 추출
+            tokenBlacklistService.addToBlacklist(token); // 블랙리스트에 추가
+        }
+
+        super.unsuccessfulAuthentication(request, response, failed);
+    }
+
 }

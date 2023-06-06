@@ -4,30 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e980b3-ed4a-4741-91f7-006c396a19d4" name="변경" comment="feat : 5.2 특정 설문지 불러오기(질문 &amp; 답변 조회하기)">
-      <change afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/client/UserServiceClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="f7e980b3-ed4a-4741-91f7-006c396a19d4" name="변경" comment="refactor : user 정보 추가">
+      <change afterPath="$PROJECT_DIR$/user-service/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/TokenBlacklistService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/TokenBlacklistServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apigateway-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/SformServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/SformServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/api/form/FormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/api/form/FormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormService.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/space/SpaceServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/space/SpaceServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/AnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/AnswerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/MultipleChoiceAnswerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dao/form/MultipleChoiceAnswerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/form/FormDataDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/form/FormDataDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/form/FormResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/form/FormResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/space/SpaceDataDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/space/SpaceDataDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/api/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/api/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/dto/UserRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/dto/UserRequestDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/dto/UserResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/dto/UserResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/global/security/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/global/security/AuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/global/security/WebSecurity.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/global/security/WebSecurity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,9 +42,28 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$/user-service">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="user-service" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="user-service" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="user-service" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -60,8 +73,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -98,9 +111,11 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "라이브러리",
+    "project.structure.last.edited": "프로젝트",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "configurable.group.build",
+    "spring.configuration.checksum": "12f770c25b7ced02776c7c414c659b17",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -112,7 +127,102 @@
       <recent name="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/global" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.ApigatewayServiceApplication">
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.DiscoveryserviceApplication">
+    <configuration name="user-service [bootJarMainClassName]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/user-service" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="bootJarMainClassName" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="user-service [bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/user-service" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="bootJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="user-service [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/user-service" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="user-service [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/user-service" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>false</ForceTestExec>
+      <method v="2" />
+    </configuration>
     <configuration name="ApigatewayServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="apigateway-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.ctype.apigatewayservice.ApigatewayServiceApplication" />
@@ -172,6 +282,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.user-service [bootJar]" />
+        <item itemvalue="Gradle.user-service [build]" />
+        <item itemvalue="Gradle.user-service [clean]" />
+        <item itemvalue="Gradle.user-service [bootJarMainClassName]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -181,7 +299,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1685599142115</updated>
-      <workItem from="1685599143129" duration="97876000" />
+      <workItem from="1685599143129" duration="111071000" />
+      <workItem from="1685975933565" duration="8394000" />
     </task>
     <task id="LOCAL-00001" summary="feat : sform-service 구현">
       <created>1685601804465</created>
@@ -267,7 +386,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685792664109</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="refactor : user 정보 추가">
+      <created>1685949218873</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1685949218874</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -286,6 +412,7 @@
     <MESSAGE value="refactor : 4.2 설문 생성 구현 코드 수정" />
     <MESSAGE value="feat : 5.1 설문 참여" />
     <MESSAGE value="feat : 5.2 특정 설문지 불러오기(질문 &amp; 답변 조회하기)" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat : 5.2 특정 설문지 불러오기(질문 &amp; 답변 조회하기)" />
+    <MESSAGE value="refactor : user 정보 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor : user 정보 추가" />
   </component>
 </project>

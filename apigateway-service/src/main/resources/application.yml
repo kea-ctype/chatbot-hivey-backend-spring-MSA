@@ -43,6 +43,15 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
+            - Path=/user-service/logout
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthorizationHeaderFilter
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
             - Path=/user-service/users/**
             - Method=GET
           filters:
@@ -55,7 +64,15 @@ spring:
             - Method=GET,POST
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}\
+        - id: sform-service
+          uri: lb://SFORM-SERVICE
+          predicates:
+            - Path=/sform-service/actuator/**
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/sform-service/(?<segment>.*), /$\{segment}
         - id: sform-service
           uri: lb://SFORM-SERVICE
           predicates:
@@ -82,5 +99,5 @@ management:
       exposure:
         include: refresh, health, beans, httptrace, info, metrics, prometheus
 
-#token:
-#  secret: user_token
+token:
+  secret: user_token

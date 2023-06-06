@@ -74,6 +74,6 @@ management:
         include: refresh, health, beans, info, metrics, prometheus
 
 
-#token:
-#  expiration_time: 86400000
-#  secret: user_token
+token:
+  expiration_time: 86400000
+  secret: user_token

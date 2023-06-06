@@ -34,6 +34,7 @@ public class UserRequestDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class UserRegisterRequestDto {
         private String name;
+        private String img;
         private String email;
         private String password;
     }
