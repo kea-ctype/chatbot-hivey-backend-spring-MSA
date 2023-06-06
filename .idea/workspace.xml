@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e980b3-ed4a-4741-91f7-006c396a19d4" name="변경" comment="refactor : user 정보 추가">
-      <change afterPath="$PROJECT_DIR$/apigateway-service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/discoveryservice/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/user-service.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/user-service.main.iml" afterDir="false" />
+    <list default="true" id="f7e980b3-ed4a-4741-91f7-006c396a19d4" name="변경" comment="add : discovery-service Dockerfile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/discoveryservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/discoveryservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway-service/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -394,7 +390,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685949218874</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="add : discovery-service Dockerfile">
+      <created>1686070444470</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1686070444470</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -414,6 +417,7 @@
     <MESSAGE value="feat : 5.1 설문 참여" />
     <MESSAGE value="feat : 5.2 특정 설문지 불러오기(질문 &amp; 답변 조회하기)" />
     <MESSAGE value="refactor : user 정보 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor : user 정보 추가" />
+    <MESSAGE value="add : discovery-service Dockerfile" />
+    <option name="LAST_COMMIT_MESSAGE" value="add : discovery-service Dockerfile" />
   </component>
 </project>

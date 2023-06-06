@@ -1,4 +1,4 @@
 FROM openjdk:11-ea-jre
 VOLUME /tmp
-COPY target/discoveryservice-1.0.jar DiscoveryService.jar
-ENTRYPOINT ["java", "-jar", "DiscoveryService.jar"]
+COPY target/apigateway-service-1.0.jar ApigatewayService.jar
+ENTRYPOINT ["java", "-jar", "ApigatewayService.jar"]
