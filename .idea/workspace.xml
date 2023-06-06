@@ -5,22 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7e980b3-ed4a-4741-91f7-006c396a19d4" name="변경" comment="refactor : user 정보 추가">
-      <change afterPath="$PROJECT_DIR$/user-service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/TokenBlacklistService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/TokenBlacklistServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/sform-service.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/sform-service.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/user-service.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/user-service.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway-service/src/main/java/com/ctype/apigatewayservice/ApigatewayServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway-service/src/main/java/com/ctype/apigatewayservice/ApigatewayServiceApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apigateway-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/application/form/FormServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/form/FormResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/dto/form/FormResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sform-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/api/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/api/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/application/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/dto/UserRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/dto/UserRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/dto/UserResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/dto/UserResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/global/security/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/global/security/AuthenticationFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/global/security/WebSecurity.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/global/security/WebSecurity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -105,17 +98,17 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/cheanna/IdeaProjects/ctype/chatbot-hivey-backend-spring-MSA/sform-service/src/main/java/com/hivey/sformservice/global",
+    "last_opened_file_path": "/Users/namseonu/Documents/project/termproject/ctype-hivey/backend-spring-MSA",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "프로젝트",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "configurable.group.build",
-    "spring.configuration.checksum": "12f770c25b7ced02776c7c414c659b17",
+    "spring.configuration.checksum": "51f022f148e036e6fbf1ef5a9d601f7f",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -134,7 +127,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.DiscoveryserviceApplication">
+  <component name="RunManager" selected="Spring Boot.UserServiceApplication">
     <configuration name="user-service [bootJarMainClassName]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -154,7 +147,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="user-service [bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -176,7 +168,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="user-service [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -198,7 +189,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="user-service [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -220,7 +210,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="ApigatewayServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -282,6 +271,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Gradle.user-service [bootJar]" />
+      <item itemvalue="Gradle.user-service [bootJarMainClassName]" />
+      <item itemvalue="Gradle.user-service [build]" />
+      <item itemvalue="Gradle.user-service [clean]" />
+      <item itemvalue="Spring Boot.ConfigServiceApplication" />
+      <item itemvalue="Spring Boot.DiscoveryserviceApplication" />
+      <item itemvalue="Spring Boot.ApigatewayServiceApplication" />
+      <item itemvalue="Spring Boot.UserServiceApplication" />
+      <item itemvalue="Spring Boot.SformServiceApplication" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.user-service [bootJar]" />
@@ -301,6 +301,7 @@
       <updated>1685599142115</updated>
       <workItem from="1685599143129" duration="111071000" />
       <workItem from="1685975933565" duration="8394000" />
+      <workItem from="1686052574039" duration="12911000" />
     </task>
     <task id="LOCAL-00001" summary="feat : sform-service 구현">
       <created>1685601804465</created>

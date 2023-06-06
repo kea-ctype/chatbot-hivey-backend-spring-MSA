@@ -37,6 +37,7 @@
         <set>
           <option value="token" />
           <option value="userId" />
+          <option value="Access-Control-Expose-Headers" />
         </set>
       </option>
     </inspection_tool>
