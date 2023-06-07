@@ -20,6 +20,7 @@ import com.hivey.sformservice.dto.form.FormRequestDto.*;
 import com.hivey.sformservice.dto.form.FormRequestDto.ShortAnswerReq;
 import com.hivey.sformservice.dto.form.FormResponseDto.*;
 import com.hivey.sformservice.global.error.CustomException;
+import com.jayway.jsonpath.internal.function.numeric.Sum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -344,7 +345,6 @@ public class FormServiceImpl implements FormService {
 
         SpaceMember spaceMember = spaceMemberRepository.findOneByUserIdAndSpace(userId, space).orElseThrow(() -> new CustomException(NOT_EXISTS_SPACE_MEMBER));
 
-
         // formAnswerRequestDto로부터 받은 값을 데이터베이스에 저장한다.
 
         // 객관식 질문에 대한 응답을 저장한다.
@@ -386,8 +386,22 @@ public class FormServiceImpl implements FormService {
         }
 
         // 해당 멤버의 설문 참여 현황을 업데이트한다.
-        Submission submission = submissionRepository.findOneByFormAndMember(form, spaceMember).orElseThrow(() -> new CustomException(NOT_EXISTS_SUBMISSION));
-        submission.updateIsSubmit('Y');
+        Optional<Submission> submissionOptional = submissionRepository.findOneByFormAndMember(form, spaceMember);
+
+        Submission submission;
+
+        if (submissionOptional.isPresent()) {
+            submission = submissionOptional.get();
+            submission.updateIsSubmit('Y');
+            log.info("isPresent(): " + submission.getSubmitId());
+        } else {
+            submission = Submission.builder()
+                    .member(spaceMember)
+                    .form(form)
+                    .isSubmit('Y')
+                    .build();
+            log.info("!isPresent(): " + submission.getSubmitId());
+        }
 
         Submission updatedSubmission = submissionRepository.save(submission);
         return updatedSubmission.getIsSubmit();
