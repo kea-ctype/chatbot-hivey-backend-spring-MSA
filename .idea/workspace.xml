@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e980b3-ed4a-4741-91f7-006c396a19d4" name="변경" comment="refactor : user 정보 추가">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway-service/src/main/java/com/ctype/apigatewayservice/ApigatewayServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway-service/src/main/java/com/ctype/apigatewayservice/ApigatewayServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/api/form/FormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/api/form/FormController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/api/space/SpaceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/api/space/SpaceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/api/space/SpaceGroupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sform-service/src/main/java/com/hivey/sformservice/api/space/SpaceGroupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/api/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/api/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/global/security/WebSecurity.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/hivey/userservice/global/security/WebSecurity.java" afterDir="false" />
-    </list>
+    <list default="true" id="f7e980b3-ed4a-4741-91f7-006c396a19d4" name="변경" comment="refactor : user 정보 추가" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -302,7 +294,7 @@
       <updated>1685599142115</updated>
       <workItem from="1685599143129" duration="111071000" />
       <workItem from="1685975933565" duration="8394000" />
-      <workItem from="1686052574039" duration="17310000" />
+      <workItem from="1686052574039" duration="17901000" />
     </task>
     <task id="LOCAL-00001" summary="feat : sform-service 구현">
       <created>1685601804465</created>
