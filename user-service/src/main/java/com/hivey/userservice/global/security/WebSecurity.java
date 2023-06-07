@@ -40,12 +40,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/error/**").permitAll()
-                .antMatchers("/**")
-                .hasIpAddress("172.16.227.2")
-                .and()
+                .antMatchers("/**").hasIpAddress("172.16.227.2").and()
                 .addFilter(getAuthenticationFilter());
 
-        http.cors().configurationSource(corsConfigurationSource()).and();
+//        http.cors().configurationSource(corsConfigurationSource()).and();
         http.csrf().disable();
 
         http.headers().frameOptions().disable();
