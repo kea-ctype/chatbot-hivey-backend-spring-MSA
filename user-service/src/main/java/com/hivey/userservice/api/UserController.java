@@ -2,10 +2,7 @@ package com.hivey.userservice.api;
 
 import com.hivey.userservice.application.TokenBlacklistService;
 import com.hivey.userservice.application.UserService;
-import com.hivey.userservice.application.UserServiceImpl;
-import com.hivey.userservice.dto.UserRequestDto;
 import com.hivey.userservice.dto.UserRequestDto.UserRegisterRequestDto;
-import com.hivey.userservice.dto.UserResponseDto;
 import com.hivey.userservice.dto.UserResponseDto.GetUserRes;
 import com.hivey.userservice.dto.UserResponseDto.UserRes;
 import com.hivey.userservice.global.config.BaseResponse;
@@ -13,10 +10,7 @@ import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
