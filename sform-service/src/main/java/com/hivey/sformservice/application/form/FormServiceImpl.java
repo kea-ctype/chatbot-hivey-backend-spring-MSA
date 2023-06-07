@@ -386,8 +386,22 @@ public class FormServiceImpl implements FormService {
         }
 
         // 해당 멤버의 설문 참여 현황을 업데이트한다.
-        Submission submission = submissionRepository.findOneByFormAndMember(form, spaceMember).orElseThrow(() -> new CustomException(NOT_EXISTS_SUBMISSION));
-        submission.updateIsSubmit('Y');
+        Optional<Submission> submissionOptional = submissionRepository.findOneByFormAndMember(form, spaceMember);
+
+        Submission submission;
+
+        if (submissionOptional.isPresent()) {
+            submission = submissionOptional.get();
+            submission.updateIsSubmit('Y');
+            log.info("isPresent(): " + submission.getSubmitId());
+        } else {
+            submission = Submission.builder()
+                    .member(spaceMember)
+                    .form(form)
+                    .isSubmit('Y')
+                    .build();
+            log.info("!isPresent(): " + submission.getSubmitId());
+        }
 
         Submission updatedSubmission = submissionRepository.save(submission);
         return updatedSubmission.getIsSubmit();
