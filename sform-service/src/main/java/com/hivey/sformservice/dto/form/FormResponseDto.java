@@ -131,19 +131,21 @@ public class FormResponseDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class FormListResponseDto {
         private Long formId;
-        private String creator;
         private String title;
         private Date startDate;
         private Date endDate;
+        private boolean isTarget;
+        private boolean isSubmit;
 
 
         @Builder
-        public FormListResponseDto(Long formId, String creator, String title, Date startDate, Date endDate) {
+        public FormListResponseDto(Long formId, String title, Date startDate, Date endDate, boolean isTarget, boolean isSubmit) {
             this.formId = formId;
-            this.creator = creator;
             this.title = title;
             this.startDate = startDate;
             this.endDate = endDate;
+            this.isTarget = isTarget;
+            this.isSubmit = isSubmit;
         }
     }
 
@@ -405,7 +407,16 @@ public class FormResponseDto {
         }
     }
 
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class SubmissionByUserResponseDto {
+        private boolean isSubmit;
 
+        @Builder
+        public SubmissionByUserResponseDto(boolean isSubmit) {
+            this.isSubmit = isSubmit;
+        }
+    }
 
 
 
