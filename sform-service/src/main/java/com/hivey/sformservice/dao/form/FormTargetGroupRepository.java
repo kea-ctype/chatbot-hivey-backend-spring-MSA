@@ -3,6 +3,7 @@ package com.hivey.sformservice.dao.form;
 
 import com.hivey.sformservice.domain.form.Form;
 import com.hivey.sformservice.domain.form.FormTargetGroup;
+import com.hivey.sformservice.domain.space.SpaceGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +12,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RepositoryRestResource(collectionResourceRel="formTargetGroup", path="formTargetGroup")
 public interface FormTargetGroupRepository extends JpaRepository<FormTargetGroup, Long> {
@@ -20,4 +22,6 @@ public interface FormTargetGroupRepository extends JpaRepository<FormTargetGroup
     int saveGroup(@Param("formId") Long formId, @Param("groupId") Long groupId);
 
     List<FormTargetGroup> findAllByForm(Form form);
+
+    List<FormTargetGroup> findAllByGroupAndForm(SpaceGroup group, Form form);
 }

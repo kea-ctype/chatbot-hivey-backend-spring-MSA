@@ -704,5 +704,17 @@ public class FormServiceImpl implements FormService {
         }
         return answerAnswerList;
     }
+
+    @Override
+    public SubmissionByUserResponseDto getSubmissionByUser(Long formId, Long userId) {
+        Form form = formRepository.findById(formId).orElseThrow(() -> new CustomException(NOT_EXISTS_FORM));
+        Space space = form.getSpace();
+
+        SpaceMember spaceMember = spaceMemberRepository.findOneByUserIdAndSpace(userId, space).orElseThrow(() -> new CustomException(NOT_EXISTS_SPACE_MEMBER));
+
+        Optional<Submission> submissionOptional = submissionRepository.findOneByFormAndMember(form, spaceMember);
+
+        return SubmissionByUserResponseDto.builder().isSubmit(submissionOptional.isPresent()).build();
+    }
 }
 

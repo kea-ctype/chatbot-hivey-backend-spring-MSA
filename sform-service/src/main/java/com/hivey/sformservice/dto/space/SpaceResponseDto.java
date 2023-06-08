@@ -18,11 +18,13 @@ public class SpaceResponseDto {
     public static class SpaceCreateRes {
         private Long spaceId;
         private String accessCode;
+        private Long memberId;
 
         @Builder
-        public SpaceCreateRes(Long spaceId, String accessCode) {
+        public SpaceCreateRes(Long spaceId, String accessCode, Long memberId) {
             this.spaceId = spaceId;
             this.accessCode = accessCode;
+            this.memberId = memberId;
         }
     }
 
