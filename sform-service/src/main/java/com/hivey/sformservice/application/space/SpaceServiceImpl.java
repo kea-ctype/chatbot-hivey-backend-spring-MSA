@@ -1,5 +1,6 @@
 package com.hivey.sformservice.application.space;
 
+import com.hivey.sformservice.client.UserServiceClient;
 import com.hivey.sformservice.dao.form.FormRepository;
 import com.hivey.sformservice.dao.form.FormTargetGroupRepository;
 import com.hivey.sformservice.dao.form.SubmissionRepository;
@@ -11,8 +12,10 @@ import com.hivey.sformservice.domain.form.Submission;
 import com.hivey.sformservice.domain.space.Space;
 import com.hivey.sformservice.domain.space.SpaceGroup;
 import com.hivey.sformservice.domain.space.SpaceMember;
+import com.hivey.sformservice.dto.form.FormDataDto;
 import com.hivey.sformservice.dto.form.FormResponseDto.FormListResponseDto;
 import com.hivey.sformservice.dto.group.SpaceGroupResponseDto.SpaceGroupListRes;
+import com.hivey.sformservice.dto.member.SpaceMemberResponseDto;
 import com.hivey.sformservice.dto.space.SpaceRequestDto.SpaceCreateReq;
 import com.hivey.sformservice.dto.space.SpaceResponseDto.SpaceCreateRes;
 import com.hivey.sformservice.dto.space.SpaceResponseDto.SpaceInfoRes;
@@ -30,6 +33,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.hivey.sformservice.dto.member.SpaceMemberResponseDto.*;
 import static com.hivey.sformservice.global.config.BaseResponseStatus.*;
 
 
@@ -44,6 +48,7 @@ public class SpaceServiceImpl implements SpaceService{
     private final SpaceGroupRepository spaceGroupRepository;
     private final SubmissionRepository submissionRepository;
     private final FormTargetGroupRepository formTargetGroupRepository;
+    private final UserServiceClient userServiceClient;
 
     private final Environment env;
 
@@ -147,6 +152,31 @@ public class SpaceServiceImpl implements SpaceService{
             int memberCount = spaceMemberRepository.findAllBySpace(space).size();
 
             List<SpaceGroup> spaceGroups = spaceGroupRepository.findAllBySpace(space);
+            List<SpaceMemberByGroupRes> spaceMemberByGroupRes = new ArrayList<>();
+            List<SpaceGroupListRes> spaceGroupListRes = new ArrayList<>();
+            for (SpaceGroup spaceGroup : spaceGroups) {
+
+                //spacegroup으로 spacemember 정보 가져오기
+                List<SpaceMember> spaceMembers = spaceMemberRepository.findAllByGroup(spaceGroup);
+
+
+                for (SpaceMember member : spaceMembers) {
+                    FormDataDto.GetUserRes getUserRes = userServiceClient.getUsers(member.getUserId());
+                    //spacemember res 추가
+                    spaceMemberByGroupRes.add(SpaceMemberByGroupRes.builder()
+                            .memberId(member.getMemberId())
+                            .name(getUserRes.getName())
+                            .email(getUserRes.getEmail())
+                            .position(member.getPosition())
+                            .build());
+                }
+
+                spaceGroupListRes.add(SpaceGroupListRes.builder()
+                        .members(spaceMemberByGroupRes)
+                        .name(spaceGroup.getName())
+                        .build());
+
+            }
 
             List<SpaceGroupListRes> spaceGroupListResponseDtos = spaceGroups.stream()
                     .map(spaceGroup -> new ModelMapper().map(spaceGroup, SpaceGroupListRes.class))

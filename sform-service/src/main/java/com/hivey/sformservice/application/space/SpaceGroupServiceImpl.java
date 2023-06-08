@@ -69,10 +69,12 @@ public class SpaceGroupServiceImpl implements SpaceGroupService {
             //spacegroup으로 spacemember 정보 가져오기
             List<SpaceMember> spaceMembers = spaceMemberRepository.findAllByGroup(spaceGroup);
             for (SpaceMember spaceMember : spaceMembers) {
+                GetUserRes getUserRes = userServiceClient.getUsers(spaceMember.getUserId());
                 //spacemember res 추가
                 spaceMemberByGroupRes.add(SpaceMemberByGroupRes.builder()
                         .memberId(spaceMember.getMemberId())
-                        .name(userServiceClient.getUsers(spaceMember.getUserId()).getName())
+                        .name(getUserRes.getName())
+                        .email(getUserRes.getEmail())
                         .position(spaceMember.getPosition())
                         .build());
             }

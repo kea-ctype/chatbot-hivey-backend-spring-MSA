@@ -15,12 +15,14 @@ public class SpaceMemberResponseDto {
     public static class SpaceMemberByGroupRes {
         private Long memberId;
         private String name;
+        private String email;
         private char position;
 
         @Builder
-        public SpaceMemberByGroupRes(Long memberId, String name, char position) {
+        public SpaceMemberByGroupRes(Long memberId, String name, String email, char position) {
             this.memberId = memberId;
             this.name = name;
+            this.email = email;
             this.position = position;
         }
     }
