@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7e980b3-ed4a-4741-91f7-006c396a19d4" name="변경" comment="add : discovery-service Dockerfile">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/sform-service.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/sform-service.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/chatbot-hivey-backend-spring-MSA.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/chatbot-hivey-backend-spring-MSA.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/git-local-repo" beforeDir="false" afterPath="$PROJECT_DIR$/git-local-repo" afterDir="false" />
     </list>
