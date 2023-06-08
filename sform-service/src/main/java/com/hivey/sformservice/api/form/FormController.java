@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.Path;
 import java.awt.*;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import static com.hivey.sformservice.global.config.BaseResponseStatus.SUCCESS;
 @RestController
 @RequestMapping("/forms")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class FormController {
 
     private final FormService formService;
@@ -116,5 +117,9 @@ public class FormController {
         return new BaseResponse<>(formService.getFormResult(formId));
     }
 
+    @GetMapping("/{formId}/{userId}/submission")
+    public BaseResponse<SubmissionByUserResponseDto> getSubmissionByUser(@PathVariable Long formId, @PathVariable Long userId) {
+        return new BaseResponse<>(formService.getSubmissionByUser(formId, userId));
+    }
 
 }

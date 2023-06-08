@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/spaces")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 class SpaceGroupController {
 
@@ -33,7 +33,7 @@ class SpaceGroupController {
     /**
      * 3.2 모든 스페이스 그룹과 그 멤버 목록 불러오기
      */
-    @GetMapping("{spaceId}/groups/members")
+    @GetMapping("{spaceId}/groups/memberxs")
     public BaseResponse<List<SpaceGroupListRes>> getSpaceGroupsAndMembers(@PathVariable Long spaceId) {
 
         return new BaseResponse<>(spaceGroupService.findGroupsAndMembersBySpace(spaceId));

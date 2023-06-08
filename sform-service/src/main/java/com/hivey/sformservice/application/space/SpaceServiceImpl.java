@@ -1,10 +1,13 @@
 package com.hivey.sformservice.application.space;
 
 import com.hivey.sformservice.dao.form.FormRepository;
+import com.hivey.sformservice.dao.form.FormTargetGroupRepository;
+import com.hivey.sformservice.dao.form.SubmissionRepository;
 import com.hivey.sformservice.dao.space.SpaceGroupRepository;
 import com.hivey.sformservice.dao.space.SpaceMemberRepository;
 import com.hivey.sformservice.dao.space.SpaceRepository;
 import com.hivey.sformservice.domain.form.Form;
+import com.hivey.sformservice.domain.form.Submission;
 import com.hivey.sformservice.domain.space.Space;
 import com.hivey.sformservice.domain.space.SpaceGroup;
 import com.hivey.sformservice.domain.space.SpaceMember;
@@ -23,9 +26,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -41,6 +42,8 @@ public class SpaceServiceImpl implements SpaceService{
     private final FormRepository formRepository;
     private final SpaceMemberRepository spaceMemberRepository;
     private final SpaceGroupRepository spaceGroupRepository;
+    private final SubmissionRepository submissionRepository;
+    private final FormTargetGroupRepository formTargetGroupRepository;
 
     private final Environment env;
 
@@ -71,8 +74,6 @@ public class SpaceServiceImpl implements SpaceService{
 
         }
 
-
-
         // 생성한 링크와 함께 새로운 스페이스를 만든다.
         Space newSpace = spaceRepository.save(spaceCreateReq.toEntity(accessCode));
         log.debug("newSpace : {}", newSpace);
@@ -85,9 +86,8 @@ public class SpaceServiceImpl implements SpaceService{
                 .name("Default")
                 .build());
 
-
         // 요청한 스페이스의 관리자에 생성한 사용자를 추가한다.
-        spaceMemberRepository.save(SpaceMember.builder()
+        SpaceMember spaceMember = spaceMemberRepository.save(SpaceMember.builder()
                 .space(newSpace)
                 .userId(userId)
                 .group(spaceGroup)
@@ -95,10 +95,13 @@ public class SpaceServiceImpl implements SpaceService{
                 .status('Y')
                 .build());
 
-        SpaceCreateRes spaceCreateResponseDto = new ModelMapper().map(newSpace, SpaceCreateRes.class);
-
-        log.debug("spaceId2 : {}", spaceCreateResponseDto.getSpaceId());
-        return spaceCreateResponseDto;
+//        SpaceCreateRes spaceCreateResponseDto = new ModelMapper().map(newSpace, SpaceCreateRes.class);
+//        log.debug("spaceId2 : {}", spaceCreateResponseDto.getSpaceId());
+        return SpaceCreateRes.builder()
+                .spaceId(newSpace.getSpaceId())
+                .accessCode(newSpace.getAccessCode())
+                .memberId(spaceMember.getMemberId())
+                .build();
     }
 
     /**
@@ -118,13 +121,24 @@ public class SpaceServiceImpl implements SpaceService{
         // 스페이스의 설문 목록을 조회한다.
         List<Form> forms = formRepository.findAllBySpace(space);
 
-        List<FormListResponseDto> formListResponseDtos = forms.stream()
-                .map(form -> new ModelMapper().map(form, FormListResponseDto.class))
-                .collect(Collectors.toList());
+//        List<FormListResponseDto> formListResponseDtos = forms.stream()
+//                .map(form -> new ModelMapper().map(form, FormListResponseDto.class))
+//                .collect(Collectors.toList());
 
         // 스페이스 멤버 정보를 조회한다.
         SpaceMember spaceMember = spaceMemberRepository.findOneByUserIdAndSpace(userId, space)
                 .orElseThrow(() -> new CustomException(NOT_EXISTS_SPACE_MEMBER));
+
+        List<FormListResponseDto> formListResponseDtos = forms.stream()
+                .map(form -> FormListResponseDto.builder()
+                        .formId(form.getFormId())
+                        .title(form.getTitle())
+                        .startDate(form.getStartDate())
+                        .endDate(form.getEndDate())
+                        .isTarget(form.getIsMandatory() == 'Y' || formTargetGroupRepository.findAllByGroupAndForm(spaceMember.getGroup(), form).size() > 0)
+                        .isSubmit(submissionRepository.findOneByFormAndMember(form, spaceMember).isPresent() && submissionRepository.findOneByFormAndMember(form, spaceMember).get().getIsSubmit() == 'Y')
+                        .build())
+                .collect(Collectors.toList());
 
         if (spaceMember.getPosition() == 'M') {
             // 해당 사용자가 스페이스의 관리자인 경우

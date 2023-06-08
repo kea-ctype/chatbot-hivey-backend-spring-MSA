@@ -31,7 +31,7 @@ public interface FormService {
 
     GetFormResultRes getFormResult(Long formId);
 
-
+    SubmissionByUserResponseDto getSubmissionByUser(Long formId, Long memberId);
 
 
 }

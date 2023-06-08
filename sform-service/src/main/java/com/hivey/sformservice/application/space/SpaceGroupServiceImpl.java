@@ -1,11 +1,13 @@
 package com.hivey.sformservice.application.space;
 
+import com.hivey.sformservice.client.UserServiceClient;
 import com.hivey.sformservice.dao.space.SpaceGroupRepository;
 import com.hivey.sformservice.dao.space.SpaceMemberRepository;
 import com.hivey.sformservice.dao.space.SpaceRepository;
 import com.hivey.sformservice.domain.space.Space;
 import com.hivey.sformservice.domain.space.SpaceGroup;
 import com.hivey.sformservice.domain.space.SpaceMember;
+import com.hivey.sformservice.dto.form.FormDataDto.GetUserRes;
 import com.hivey.sformservice.dto.group.SpaceGroupResponseDto.SpaceGroupGetListRes;
 import com.hivey.sformservice.dto.group.SpaceGroupResponseDto.SpaceGroupListRes;
 import com.hivey.sformservice.dto.member.SpaceMemberResponseDto.SpaceMemberByGroupRes;
@@ -15,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +32,7 @@ public class SpaceGroupServiceImpl implements SpaceGroupService {
     private final SpaceGroupRepository spaceGroupRepository;
     private final SpaceRepository spaceRepository;
     private final SpaceMemberRepository spaceMemberRepository;
+    private final UserServiceClient userServiceClient;
 
 
     /**
@@ -56,9 +60,33 @@ public class SpaceGroupServiceImpl implements SpaceGroupService {
         // 스페이스에 해당하는 그룹 목록을 가져온다.
         List<SpaceGroup> spaceGroups = spaceGroupRepository.findAllBySpace(space);
 
-        return spaceGroups.stream()
-                .map(spaceGroup -> new ModelMapper().map(spaceGroup, SpaceGroupListRes.class))
-                .collect(Collectors.toList());
+
+        List<SpaceMemberByGroupRes> spaceMemberByGroupRes = new ArrayList<>();
+        List<SpaceGroupListRes> spaceGroupListRes = new ArrayList<>();
+
+        for (SpaceGroup spaceGroup : spaceGroups) {
+
+            //spacegroup으로 spacemember 정보 가져오기
+            List<SpaceMember> spaceMembers = spaceMemberRepository.findAllByGroup(spaceGroup);
+            for (SpaceMember spaceMember : spaceMembers) {
+                //spacemember res 추가
+                spaceMemberByGroupRes.add(SpaceMemberByGroupRes.builder()
+                        .memberId(spaceMember.getMemberId())
+                        .name(userServiceClient.getUsers(spaceMember.getUserId()).getName())
+                        .position(spaceMember.getPosition())
+                        .build());
+            }
+
+            spaceGroupListRes.add(SpaceGroupListRes.builder()
+                            .members(spaceMemberByGroupRes)
+                            .name(spaceGroup.getName())
+                    .build());
+
+        }
+
+
+
+        return spaceGroupListRes;
     }
 
     /**
@@ -70,9 +98,18 @@ public class SpaceGroupServiceImpl implements SpaceGroupService {
 
         // 스페이스 그룹 객체를 통해 스페이스 멤버 목록을 가져온다.
         List<SpaceMember> spaceMembers = spaceMemberRepository.findAllByGroup(spaceGroup);
+        List<SpaceMemberByGroupRes> spaceMemberByGroupRes = new ArrayList<>();
+        for (SpaceMember spaceMember : spaceMembers) {
+            //spacemember res 추가
+            spaceMemberByGroupRes.add(SpaceMemberByGroupRes.builder()
+                    .memberId(spaceMember.getMemberId())
+                    .name(userServiceClient.getUsers(spaceMember.getUserId()).getName())
+                    .position(spaceMember.getPosition())
+                    .build());
+        }
 
-        return spaceMembers.stream()
-                .map(spaceMember -> new ModelMapper().map(spaceMember,SpaceMemberByGroupRes.class ))
-                .collect(Collectors.toList());
+
+
+        return spaceMemberByGroupRes;
     }
 }
