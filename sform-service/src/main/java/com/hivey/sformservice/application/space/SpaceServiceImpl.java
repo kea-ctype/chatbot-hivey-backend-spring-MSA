@@ -178,16 +178,16 @@ public class SpaceServiceImpl implements SpaceService{
 
             }
 
-            List<SpaceGroupListRes> spaceGroupListResponseDtos = spaceGroups.stream()
-                    .map(spaceGroup -> new ModelMapper().map(spaceGroup, SpaceGroupListRes.class))
-                    .collect(Collectors.toList());
+//            List<SpaceGroupListRes> spaceGroupListResponseDtos = spaceGroups.stream()
+//                    .map(spaceGroup -> new ModelMapper().map(spaceGroup, SpaceGroupListRes.class))
+//                    .collect(Collectors.toList());
 
             return SpaceInfoRes.builder()
                     .name(space.getName())
                     .img(space.getImg())
                     .forms(formListResponseDtos)
                     .memberCount(memberCount)
-                    .groups(spaceGroupListResponseDtos)
+                    .groups(spaceGroupListRes)
                     .build();
 
         } else if (spaceMember.getPosition() == 'P') {
